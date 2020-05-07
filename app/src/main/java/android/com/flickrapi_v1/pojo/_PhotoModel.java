@@ -7,13 +7,32 @@ public class _PhotoModel {
     private Photos photos;
     private String stat;
 
-    public class Photos {
+    public Photos getPhotos() {
+        return photos;
+    }
+
+    public void setPhotos(Photos photos) {
+        this.photos = photos;
+    }
+
+    public String getStat() {
+        return stat;
+    }
+
+    public void setStat(String stat) {
+        this.stat = stat;
+    }
+
+    public static class Photos {
 
         private int page;
         private int pages;
         private int perpage;
-        private List<Photo> photo;
+        public List<Photo> photo;
         private String total;
+
+        public Photos() {
+        }
 
         public int getPage() {
             return page;
@@ -60,12 +79,21 @@ public class _PhotoModel {
             private int farm;
             private String id;
             private int isfamily;
+            private String url_s;
             private int isfriend;
             private int ispublic;
             private String owner;
             private String secret;
             private String server;
             private String title;
+
+            public String getUrl_s() {
+                return url_s;
+            }
+
+            public void setUrl_s(String url_s) {
+                this.url_s = url_s;
+            }
 
             public int getFarm() {
                 return farm;
