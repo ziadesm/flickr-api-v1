@@ -13,7 +13,7 @@
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="android.com.flickrapi_v1.ui.dashboard.DashboardFragment"
+        android:name="android.com.flickrapi_v1.ui.profile.ProfileFragment"
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_dashboard" />
 
