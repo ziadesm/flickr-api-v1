@@ -5,4 +5,9 @@
     <string name="title_notifications">Notifications</string>
     <string name="image_text_code">Image title</string>
     <string name="image_description">It\'s an image!</string>
+    <string name="network_available">Back Online</string>
+    <string name="network_available_message">You become online again</string>
+    <string name="network_not_available">You\'re Offline</string>
+    <string name="network_not_available_message">Switch your celler data or WiFi to Reconnect, then RETRY</string>
+    <string name="network_not_available_retry">"Retry "</string>
 </resources>
