@@ -5,11 +5,17 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+import com.google.android.material.snackbar.Snackbar;
+
 public class NetworkChangeReceiver extends BroadcastReceiver {
+    private Snackbar snackbar;
+
     @Override
     public void onReceive(Context context, Intent intent) {
         if (isOnline(context)) {
-
+            snackbar.show();
+        } else {
+            
         }
     }
 

@@ -23,7 +23,7 @@ import retrofit2.Response;
 public class HomeViewModel extends ViewModel {
 
     private static final String TAG = "HomeViewModel";
-    public MutableLiveData<_PhotoModel> mutableData = new MutableLiveData<>();;
+    public MutableLiveData<_PhotoModel> mutableData = new MutableLiveData<>();
 
     public void getRecentPhotos() {
         Single<_PhotoModel> recentPhotos = PhotoClient.getINSTANCE().getRecentPhotos()
