@@ -31,4 +31,6 @@ public class HomeViewModel extends ViewModel {
         recentPhotos.subscribe(c -> mutableData.setValue(c)
                 , x -> Log.d(TAG, "getRecentPhotos: " + x.getMessage()));
     }
+
+
 }
