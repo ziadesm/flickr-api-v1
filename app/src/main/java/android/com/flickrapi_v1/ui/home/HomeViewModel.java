@@ -3,6 +3,8 @@ import android.com.flickrapi_v1.interfaces.PhotoClient;
 import android.com.flickrapi_v1.pojo._PhotoModel;
 import android.com.flickrapi_v1.pojo._PhotoModel.Photos;
 import android.com.flickrapi_v1.pojo._PhotoModel.Photos.Photo;
+import android.com.flickrapi_v1.receiver.NetworkChangeReceiver;
+import android.content.BroadcastReceiver;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -31,6 +33,4 @@ public class HomeViewModel extends ViewModel {
         recentPhotos.subscribe(c -> mutableData.setValue(c)
                 , x -> Log.d(TAG, "getRecentPhotos: " + x.getMessage()));
     }
-
-
 }
