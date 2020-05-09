@@ -20,22 +20,30 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.com.flickrapi_v1.R;
 
 import static android.content.Context.JOB_SCHEDULER_SERVICE;
-import static androidx.core.content.ContextCompat.getSystemService;
 
 public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
     RecyclerView aRecycler;
     RecentImageAdapter aAdapter;
+    SwipeRefreshLayout refreshLayout;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
         aRecycler = root.findViewById(R.id.recycler);
+        refreshLayout = root.findViewById(R.id.home_fragment_layout);
+        refreshLayout.setColorSchemeResources(R.color.dialog_background_pri
+                , R.color.colorPrimaryDark
+                , R.color.dialog_surface);
+
+        refreshLayout.setOnRefreshListener(() -> homeViewModel.getRecentPhotos());
+
         scheduleJob();
 
         homeViewModel =
@@ -44,7 +52,10 @@ public class HomeFragment extends Fragment {
         aRecycler.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         aAdapter = new RecentImageAdapter();
         aRecycler.setAdapter(aAdapter);
-        homeViewModel.mutableData.observe(getActivity(), c -> aAdapter.setList(c));
+        homeViewModel.mutableData.observe(getActivity(), c -> {
+            aAdapter.setList(c);
+            refreshLayout.setRefreshing(false);
+        });
 
         return root;
     }
