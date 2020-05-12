@@ -2,10 +2,9 @@ package android.com.flickrapi_v1.interfaces;
 
 import android.com.flickrapi_v1.pojo._PhotoModel;
 
-import java.util.List;
-
 import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory;
 import io.reactivex.rxjava3.core.Single;
+import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -34,6 +33,19 @@ public class PhotoClient {
     }
 
     public Single<_PhotoModel> getRecentPhotos() {
-        return apiConfig.getRecentPhoto("flickr.photos.getRecent", API_KEY,URL_S, JSON_FORMAT, NOJSON_CALLBACK);
+        return apiConfig.getRecentPhoto("flickr.photos.getRecent",
+                API_KEY,
+                URL_S,
+                JSON_FORMAT,
+                NOJSON_CALLBACK);
+    }
+
+    public Call<_PhotoModel> getRecentPhotoPage(int page_num) {
+        return apiConfig.getRecentPhotoPage("flickr.photos.getRecent",
+                API_KEY,
+                URL_S,
+                page_num,
+                JSON_FORMAT,
+                NOJSON_CALLBACK);
     }
 }

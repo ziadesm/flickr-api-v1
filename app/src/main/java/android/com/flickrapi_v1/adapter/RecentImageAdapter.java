@@ -19,7 +19,6 @@ import java.util.List;
 
 public class RecentImageAdapter extends RecyclerView.Adapter<RecentImageAdapter.ImageViewHolder> {
     private List<_PhotoModel.Photos.Photo> mList = new ArrayList<>();
-    private _PhotoModel photos = new _PhotoModel();
 
     @NonNull
     @Override

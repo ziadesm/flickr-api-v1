@@ -1,6 +1,10 @@
 package android.com.flickrapi_v1.pojo;
 
+import androidx.recyclerview.widget.DiffUtil;
+
 import java.util.List;
+
+import io.reactivex.rxjava3.annotations.NonNull;
 
 public class _PhotoModel {
 
@@ -34,30 +38,6 @@ public class _PhotoModel {
         public Photos() {
         }
 
-        public int getPage() {
-            return page;
-        }
-
-        public void setPage(int page) {
-            this.page = page;
-        }
-
-        public int getPages() {
-            return pages;
-        }
-
-        public void setPages(int pages) {
-            this.pages = pages;
-        }
-
-        public int getPerpage() {
-            return perpage;
-        }
-
-        public void setPerpage(int perpage) {
-            this.perpage = perpage;
-        }
-
         public List<Photo> getPhoto() {
             return photo;
         }
@@ -66,15 +46,7 @@ public class _PhotoModel {
             this.photo = photo;
         }
 
-        public String getTotal() {
-            return total;
-        }
-
-        public void setTotal(String total) {
-            this.total = total;
-        }
-
-        public class Photo {
+        public static class Photo {
 
             private int farm;
             private String id;
@@ -86,6 +58,20 @@ public class _PhotoModel {
             private String secret;
             private String server;
             private String title;
+
+            public static DiffUtil.ItemCallback<Photos.Photo> CALLBACK = new DiffUtil.ItemCallback<Photo>() {
+                @Override
+                public boolean areItemsTheSame(@androidx.annotation.NonNull Photo oldItem
+                        , @androidx.annotation.NonNull Photo newItem) {
+                    return oldItem.id == newItem.id;
+                }
+
+                @Override
+                public boolean areContentsTheSame(@androidx.annotation.NonNull Photo oldItem
+                        , @androidx.annotation.NonNull Photo newItem) {
+                    return true;
+                }
+            };
 
             public String getUrl_s() {
                 return url_s;
@@ -166,6 +152,7 @@ public class _PhotoModel {
             public void setTitle(String title) {
                 this.title = title;
             }
+
         }
     }
 }
