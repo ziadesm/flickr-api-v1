@@ -19,8 +19,11 @@ public interface FlickrApiConfig {
             ,@Query("format") String format
             ,@Query("nojsoncallback") int nojsoncallback);
 
-    @GET("rest/?method={method}&api_key={api_key}&page={page_num}&format=json&nojsoncallback=1")
-    Call<_PhotoModel> getRecentPhoto(@Query("method") String method
-            , @Query("api_key") String api_key
-            , @Query("page_num") int page_num);
+    @GET("rest/")
+    Call<_PhotoModel> getRecentPhotoPage(@Query("method") String method
+            ,@Query("api_key") String api_key
+            ,@Query("extras") String extras
+            ,@Query("page_num") int page_num
+            ,@Query("format") String format
+            ,@Query("nojsoncallback") int nojsoncallback);
 }

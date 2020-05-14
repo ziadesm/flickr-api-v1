@@ -1,4 +1,5 @@
 package android.com.flickrapi_v1.pojo;
+import androidx.recyclerview.widget.DiffUtil;
 
 import java.util.List;
 
@@ -74,7 +75,7 @@ public class _PhotoModel {
             this.total = total;
         }
 
-        public class Photo {
+        public static class Photo {
 
             private int farm;
             private String id;
@@ -87,6 +88,19 @@ public class _PhotoModel {
             private String server;
             private String title;
 
+            public static DiffUtil.ItemCallback<Photos.Photo> CALLBACK = new DiffUtil.ItemCallback<Photo>() {
+                @Override
+                public boolean areItemsTheSame(@androidx.annotation.NonNull Photo oldItem
+                        , @androidx.annotation.NonNull Photo newItem) {
+                    return oldItem.url_s == newItem.url_s;
+                }
+
+                @Override
+                public boolean areContentsTheSame(@androidx.annotation.NonNull Photo oldItem
+                        , @androidx.annotation.NonNull Photo newItem) {
+                    return oldItem.id.equals(newItem.id);
+                }
+            };
             public String getUrl_s() {
                 return url_s;
             }

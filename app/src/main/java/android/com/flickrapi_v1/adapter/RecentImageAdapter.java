@@ -1,7 +1,5 @@
 package android.com.flickrapi_v1.adapter;
-
 import android.com.flickrapi_v1.R;
-import android.com.flickrapi_v1.pojo._PhotoModel;
 import android.com.flickrapi_v1.pojo._PhotoModel.Photos.Photo;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,16 +8,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.paging.PagedListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
-import java.util.List;
+public class RecentImageAdapter extends PagedListAdapter<Photo, RecentImageAdapter.ImageViewHolder> {
 
-public class RecentImageAdapter extends RecyclerView.Adapter<RecentImageAdapter.ImageViewHolder> {
-    private List<_PhotoModel.Photos.Photo> mList = new ArrayList<>();
-    private _PhotoModel photos = new _PhotoModel();
+    public RecentImageAdapter() {
+        super(Photo.CALLBACK);
+    }
 
     @NonNull
     @Override
@@ -30,24 +28,15 @@ public class RecentImageAdapter extends RecyclerView.Adapter<RecentImageAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ImageViewHolder holder, int position) {
-        if (mList.get(position).getTitle() == null) {
-            holder.titleTv.setText("There\'s no title here");
+        Photo item = getItem(position);
+        if (item.getTitle() == null) {
+            holder.titleTv.setText(R.string.no_image_found);
         } else {
-            holder.titleTv.setText(mList.get(position).getTitle());
+            holder.titleTv.setText(item.getTitle());
         }
         Picasso.get()
-                .load(mList.get(position).getUrl_s())
+                .load(item.getUrl_s())
                 .into(holder.imageView);
-    }
-
-    @Override
-    public int getItemCount() {
-        return mList.size();
-    }
-
-    public void setList(_PhotoModel photos) {
-        this.mList = photos.getPhotos().photo;
-        notifyDataSetChanged();
     }
 
     public class ImageViewHolder extends RecyclerView.ViewHolder {

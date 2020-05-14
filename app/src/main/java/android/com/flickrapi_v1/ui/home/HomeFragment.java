@@ -2,6 +2,7 @@ package android.com.flickrapi_v1.ui.home;
 import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
 import android.com.flickrapi_v1.adapter.RecentImageAdapter;
+import android.com.flickrapi_v1.pojo._PhotoModel;
 import android.com.flickrapi_v1.receiver.network.NetworkSchedulerService;
 import android.content.ComponentName;
 import android.content.Context;
@@ -17,7 +18,9 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.paging.PagedList;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -38,24 +41,29 @@ public class HomeFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
         aRecycler = root.findViewById(R.id.recycler);
         refreshLayout = root.findViewById(R.id.home_fragment_layout);
-        refreshLayout.setColorSchemeResources(R.color.dialog_background_pri
-                , R.color.colorPrimaryDark
-                , R.color.dialog_surface);
-
-        refreshLayout.setOnRefreshListener(() -> homeViewModel.getRecentPhotos());
-
         scheduleJob();
 
         homeViewModel =
                 ViewModelProviders.of(this).get(HomeViewModel.class);
-        homeViewModel.getRecentPhotos();
-        aRecycler.setLayoutManager(new GridLayoutManager(getActivity(), 3));
-        aAdapter = new RecentImageAdapter();
-        aRecycler.setAdapter(aAdapter);
-        homeViewModel.mutableData.observe(getActivity(), c -> {
-            aAdapter.setList(c);
-            refreshLayout.setRefreshing(false);
+        refreshLayout.setColorSchemeResources(R.color.dialog_background_pri
+                , R.color.colorPrimaryDark
+                , R.color.dialog_surface);
+        refreshLayout.setOnRefreshListener(() -> {
+            homeViewModel = new HomeViewModel();
+            homeViewModel.getMutableData().observe(getActivity(), photos -> {
+                aAdapter.submitList(photos);
+                refreshLayout.setEnabled(false);
+            });
         });
+
+        aRecycler.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+        aRecycler.setHasFixedSize(true);
+
+        aAdapter = new RecentImageAdapter();
+
+        homeViewModel.getMutableData().observe(getActivity(), photos -> aAdapter.submitList(photos));
+
+        aRecycler.setAdapter(aAdapter);
 
         return root;
     }
