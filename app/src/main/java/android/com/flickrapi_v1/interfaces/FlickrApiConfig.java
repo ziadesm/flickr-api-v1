@@ -23,7 +23,7 @@ public interface FlickrApiConfig {
     Call<_PhotoModel> getRecentPhotoPage(@Query("method") String method
             ,@Query("api_key") String api_key
             ,@Query("extras") String extras
-            ,@Query("page_num") int page_num
+            ,@Query("page") int page
             ,@Query("format") String format
             ,@Query("nojsoncallback") int nojsoncallback);
 }

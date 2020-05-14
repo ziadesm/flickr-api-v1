@@ -37,13 +37,4 @@ public class HomeViewModel extends ViewModel {
     public LiveData<PagedList<_PhotoModel.Photos.Photo>> getMutableData() {
         return mutableData;
     }
-
-//    public void getRecentPhotos() {
-//        Single<_PhotoModel> recentPhotos = PhotoClient.getINSTANCE().getRecentPhotos()
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread());
-//
-//        recentPhotos.subscribe(c -> mutableData.setValue(c)
-//                , x -> Log.d(TAG, "getRecentPhotos: " + x.getMessage()));
-//    }
 }

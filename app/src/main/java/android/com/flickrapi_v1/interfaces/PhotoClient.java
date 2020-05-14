@@ -1,6 +1,7 @@
 package android.com.flickrapi_v1.interfaces;
 
 import android.com.flickrapi_v1.pojo._PhotoModel;
+import android.util.Log;
 
 import java.util.List;
 
@@ -18,6 +19,7 @@ public class PhotoClient {
     private final String JSON_FORMAT = "json";
     private final String URL_S = "url_s";
     private final int NOJSON_CALLBACK = 1;
+    private static final String TAG = "Ziad PhotoClient";
 
     public PhotoClient() {
         Retrofit retrofit = new Retrofit.Builder().baseUrl(BASE_URL)
@@ -39,6 +41,7 @@ public class PhotoClient {
     }
 
     public Call<_PhotoModel> getRecentPhotoPage(int page) {
+        Log.d(TAG, "getRecentPhotoPage: " + page);
         return apiConfig.getRecentPhotoPage("flickr.photos.getRecent", API_KEY, URL_S, page, JSON_FORMAT, NOJSON_CALLBACK);
     }
 }

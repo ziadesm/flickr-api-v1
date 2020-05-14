@@ -45,9 +45,11 @@ public class HomeFragment extends Fragment {
 
         homeViewModel =
                 ViewModelProviders.of(this).get(HomeViewModel.class);
+
         refreshLayout.setColorSchemeResources(R.color.dialog_background_pri
                 , R.color.colorPrimaryDark
                 , R.color.dialog_surface);
+        aAdapter = new RecentImageAdapter();
         refreshLayout.setOnRefreshListener(() -> {
             homeViewModel = new HomeViewModel();
             homeViewModel.getMutableData().observe(getActivity(), photos -> {
@@ -59,9 +61,9 @@ public class HomeFragment extends Fragment {
         aRecycler.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         aRecycler.setHasFixedSize(true);
 
-        aAdapter = new RecentImageAdapter();
-
-        homeViewModel.getMutableData().observe(getActivity(), photos -> aAdapter.submitList(photos));
+        homeViewModel.getMutableData().observe(getActivity(), photos -> {
+            aAdapter.submitList(photos);
+        });
 
         aRecycler.setAdapter(aAdapter);
 

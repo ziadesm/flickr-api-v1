@@ -39,7 +39,7 @@ public class RecentImageAdapter extends PagedListAdapter<Photo, RecentImageAdapt
                 .into(holder.imageView);
     }
 
-    public class ImageViewHolder extends RecyclerView.ViewHolder {
+        public class ImageViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
         TextView titleTv;
         public ImageViewHolder(@NonNull View itemView) {

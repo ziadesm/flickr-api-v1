@@ -98,7 +98,7 @@ public class _PhotoModel {
                 @Override
                 public boolean areContentsTheSame(@androidx.annotation.NonNull Photo oldItem
                         , @androidx.annotation.NonNull Photo newItem) {
-                    return oldItem.id.equals(newItem.id);
+                    return true;
                 }
             };
             public String getUrl_s() {
