@@ -41,6 +41,11 @@ public class HomeFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
         aRecycler = root.findViewById(R.id.recycler);
         refreshLayout = root.findViewById(R.id.home_fragment_layout);
+        refreshLayout.setColorSchemeResources(R.color.dialog_background_pri
+                , R.color.colorPrimaryDark
+                , R.color.dialog_surface);
+
+
         scheduleJob();
 
         homeViewModel =
@@ -66,6 +71,11 @@ public class HomeFragment extends Fragment {
         });
 
         aRecycler.setAdapter(aAdapter);
+
+        homeViewModel.mutableData.observe(getActivity(), c -> {
+            aAdapter.submitList(c);
+            refreshLayout.setRefreshing(false);
+        });
 
         return root;
     }
