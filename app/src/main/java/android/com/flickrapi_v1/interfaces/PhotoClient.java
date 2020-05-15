@@ -36,10 +36,6 @@ public class PhotoClient {
         return INSTANCE;
     }
 
-    public Single<_PhotoModel> getRecentPhotos() {
-        return apiConfig.getRecentPhoto("flickr.photos.getRecent", API_KEY,URL_S, JSON_FORMAT, NOJSON_CALLBACK);
-    }
-
     public Call<_PhotoModel> getRecentPhotoPage(int page) {
         Log.d(TAG, "getRecentPhotoPage: " + page);
         return apiConfig.getRecentPhotoPage("flickr.photos.getRecent", API_KEY, URL_S, page, JSON_FORMAT, NOJSON_CALLBACK);

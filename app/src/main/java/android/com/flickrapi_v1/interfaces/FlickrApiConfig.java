@@ -9,14 +9,6 @@ import retrofit2.http.Query;
 public interface FlickrApiConfig {
 
     @GET("rest/")
-    Single<_PhotoModel> getRecentPhoto(
-            @Query("method") String method
-            ,@Query("api_key") String api_key
-            ,@Query("extras") String extras
-            ,@Query("format") String format
-            ,@Query("nojsoncallback") int nojsoncallback);
-
-    @GET("rest/")
     Call<_PhotoModel> getRecentPhotoPage(
             @Query("method") String method
             ,@Query("api_key") String api_key
