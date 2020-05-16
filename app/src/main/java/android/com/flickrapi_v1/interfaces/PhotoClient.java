@@ -40,4 +40,8 @@ public class PhotoClient {
         Log.d(TAG, "getRecentPhotoPage: " + page);
         return apiConfig.getRecentPhotoPage("flickr.photos.getRecent", API_KEY, URL_S, page, JSON_FORMAT, NOJSON_CALLBACK);
     }
+
+    public Single<_PhotoModel> getPhotoSearch(String text) {
+        return apiConfig.getPhotoSearch("flickr.photos.search", API_KEY, text, URL_S, JSON_FORMAT, NOJSON_CALLBACK);
+    }
 }
