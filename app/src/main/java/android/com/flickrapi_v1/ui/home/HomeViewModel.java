@@ -1,19 +1,13 @@
 package android.com.flickrapi_v1.ui.home;
 import android.com.flickrapi_v1.adapter.pagination.PhotoDataSource;
 import android.com.flickrapi_v1.adapter.pagination.PhotoDataSourceFactory;
-import android.com.flickrapi_v1.interfaces.PhotoClient;
 import android.com.flickrapi_v1.pojo._PhotoModel;
-import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
-
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.core.Single;
-import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class HomeViewModel extends ViewModel {
 
