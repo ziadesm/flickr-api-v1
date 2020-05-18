@@ -25,4 +25,14 @@ public interface FlickrApiConfig {
             ,@Query("extras") String extras
             ,@Query("format") String format
             ,@Query("nojsoncallback") int nojsoncallback);
+
+    @GET("rest/")
+    Call<_PhotoModel> getPhotoSearchPage(
+            @Query("method") String method
+            ,@Query("api_key") String api_key
+            ,@Query("text") String text
+            ,@Query("extras") String extras
+            ,@Query("page") int page
+            ,@Query("format") String format
+            ,@Query("nojsoncallback") int nojsoncallback);
 }

@@ -38,7 +38,6 @@ public class HomeFragment extends Fragment {
 
     private static final String TAG = "ZiadHomeFragment";
     private HomeViewModel homeViewModel;
-    private HomeViewModelSearch modelSearch;
     RecyclerView aRecycler;
     RecentImageAdapter aAdapter;
     SwipeRefreshLayout refreshLayout;
@@ -58,12 +57,7 @@ public class HomeFragment extends Fragment {
 
         homeViewModel =
                 ViewModelProviders.of(this).get(HomeViewModel.class);
-        modelSearch =
-                ViewModelProviders.of(this).get(HomeViewModelSearch.class);
 
-        refreshLayout.setColorSchemeResources(R.color.dialog_background_pri
-                , R.color.colorPrimaryDark
-                , R.color.dialog_surface);
         aAdapter = new RecentImageAdapter();
         refreshLayout.setOnRefreshListener(() -> {
             homeViewModel = new HomeViewModel();
@@ -86,8 +80,47 @@ public class HomeFragment extends Fragment {
             aAdapter.submitList(c);
             refreshLayout.setRefreshing(false);
         });
-
         return root;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_icon_bar, menu);
+        MenuItem item = menu.findItem(R.id.search_icon_bar);
+        SearchManager manager = (SearchManager) getActivity().getSystemService(SEARCH_SERVICE);
+
+        if (item != null) {
+            searchView = (SearchView) item.getActionView();
+            searchView.setSearchableInfo(manager.getSearchableInfo(getActivity().getComponentName()));
+            listener = new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    return true;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    return true;
+                }
+            };
+            searchView.setOnQueryTextListener(listener);
+        }
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    private boolean isOnline() {
+        ConnectivityManager cm = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = null;
+        if (cm != null) {
+            activeNetworkInfo = cm.getActiveNetworkInfo();
+        }
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -115,53 +148,5 @@ public class HomeFragment extends Fragment {
     public void onStop() {
         getActivity().stopService(new Intent(getActivity(), NetworkSchedulerService.class));
         super.onStop();
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
-    }
-
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_icon_bar, menu);
-        MenuItem item = menu.findItem(R.id.search_icon_bar);
-        SearchManager manager = (SearchManager) getActivity().getSystemService(SEARCH_SERVICE);
-
-        if (item != null) {
-            searchView = (SearchView) item.getActionView();
-            searchView.setSearchableInfo(manager.getSearchableInfo(getActivity().getComponentName()));
-            listener = new SearchView.OnQueryTextListener() {
-                @Override
-                public boolean onQueryTextSubmit(String query) {
-                    modelSearch.getPhotoSearch(query);
-                    refreshLayout.setRefreshing(true);
-                    modelSearch.data.observe(getActivity(), c -> Log.d(TAG, "onQueryTextSubmit: " + c.size()));
-                    refreshLayout.setRefreshing(false);
-                    return true;
-                }
-
-                @Override
-                public boolean onQueryTextChange(String newText) {
-                    modelSearch.getPhotoSearch(newText);
-                    refreshLayout.setRefreshing(true);
-                    modelSearch.data.observe(getActivity(), c -> Log.d(TAG, "onQueryTextSubmit: " + c.size()));
-                    refreshLayout.setRefreshing(false);
-                    return true;
-                }
-            };
-            searchView.setOnQueryTextListener(listener);
-        }
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    private boolean isOnline() {
-        ConnectivityManager cm = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = null;
-        if (cm != null) {
-            activeNetworkInfo = cm.getActiveNetworkInfo();
-        }
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 }
