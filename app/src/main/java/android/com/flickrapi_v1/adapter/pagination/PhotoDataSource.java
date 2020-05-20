@@ -14,7 +14,6 @@ import retrofit2.Response;
 
 public class PhotoDataSource extends PageKeyedDataSource<Integer, _PhotoModel.Photos.Photo> {
     public static final int FIRST_PAGE = 1;
-    private static final String TAG = "Ziad Photo";
     private Call<_PhotoModel> callbackRet;
 
     public PhotoDataSource(Call<_PhotoModel> callback) {
@@ -30,7 +29,6 @@ public class PhotoDataSource extends PageKeyedDataSource<Integer, _PhotoModel.Ph
             @Override
             public void onResponse(Call<_PhotoModel> call, Response<_PhotoModel> response) {
                 List<_PhotoModel.Photos.Photo> photo = response.body().getPhotos().getPhoto();
-                Log.d(TAG, "FIRST_PAGE_COUNT: " + FIRST_PAGE);
                 callback.onResult(photo, null, FIRST_PAGE + 1);
             }
 
@@ -50,7 +48,6 @@ public class PhotoDataSource extends PageKeyedDataSource<Integer, _PhotoModel.Ph
             @Override
             public void onResponse(Call<_PhotoModel> call, Response<_PhotoModel> response) {
                 List<_PhotoModel.Photos.Photo> photo = response.body().getPhotos().getPhoto();
-                Log.d(TAG, "onResponse: " + params.key);
                 callback.onResult(photo, params.key + 1);
             }
 

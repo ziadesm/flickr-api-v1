@@ -3,6 +3,7 @@ import android.app.SearchManager;
 import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
 import android.com.flickrapi_v1.adapter.RecentImageAdapter;
+import android.com.flickrapi_v1.pojo._PhotoModel;
 import android.com.flickrapi_v1.receiver.network.NetworkSchedulerService;
 import android.content.ComponentName;
 import android.content.Context;
@@ -23,7 +24,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.paging.PagedList;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -60,8 +63,8 @@ public class HomeFragment extends Fragment {
 
         aAdapter = new RecentImageAdapter();
         refreshLayout.setOnRefreshListener(() -> {
-            homeViewModel = new HomeViewModel();
-            homeViewModel.getMutableData().observe(getActivity(), photos -> {
+
+            homeViewModel.mutableData.observe(getActivity(), photos -> {
                 aAdapter.submitList(photos);
                 refreshLayout.setEnabled(false);
             });
@@ -101,11 +104,14 @@ public class HomeFragment extends Fragment {
             listener = new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
+                    homeViewModel = new HomeViewModel(query);
                     return true;
                 }
 
                 @Override
                 public boolean onQueryTextChange(String newText) {
+                    homeViewModel = new HomeViewModel(newText);
+                    homeViewModel.mutableData.observe(getActivity(), photos -> aAdapter.submitList(photos));
                     return true;
                 }
             };
