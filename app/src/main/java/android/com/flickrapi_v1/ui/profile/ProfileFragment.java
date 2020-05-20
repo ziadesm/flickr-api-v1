@@ -4,32 +4,32 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.com.flickrapi_v1.R;
 
 public class ProfileFragment extends Fragment {
 
-    private ProfileViewModel dashboardViewModel;
+    private ProfileViewModel profileViewModel;
+    private boolean hasAccount = true;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        dashboardViewModel =
+        profileViewModel =
                 ViewModelProviders.of(this).get(ProfileViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
-        final TextView textView = root.findViewById(R.id.text_dashboard);
-        dashboardViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
+        View root = inflater.inflate(R.layout.fragment_profile, container, false);
+
+        if (hasAccount) {
+            FragmentManager fm = getParentFragmentManager();
+            fm.beginTransaction()
+                    .replace(R.id.nav_host_fragment, new RegisterFragment())
+                    .commit();
+        }
         return root;
     }
 }
