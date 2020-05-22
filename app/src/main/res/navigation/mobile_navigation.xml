@@ -7,13 +7,13 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="android.com.flickrapi_v1.ui.home.HomeFragment"
+        android:name="echomachine.com.flickrapi_v1.ui.home.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="android.com.flickrapi_v1.ui.profile.ProfileFragment"
+        android:name="echomachine.com.flickrapi_v1.ui.profile.ProfileFragment"
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile" >
         <action
@@ -24,18 +24,18 @@
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="android.com.flickrapi_v1.ui.notifications.NotificationsFragment"
+        android:name="echomachine.com.flickrapi_v1.ui.notifications.NotificationsFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
     <fragment
         android:id="@+id/loginFragment"
-        android:name="android.com.flickrapi_v1.ui.profile.LoginFragment"
+        android:name="echomachine.com.flickrapi_v1.ui.profile.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" />
 
     <fragment
         android:id="@+id/registerFragment"
-        android:name="android.com.flickrapi_v1.ui.profile.RegisterFragment"
+        android:name="echomachine.com.flickrapi_v1.ui.profile.RegisterFragment"
         android:label="fragment_register"
         tools:layout="@layout/fragment_register" >
         <action

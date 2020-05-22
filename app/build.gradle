@@ -70,8 +70,4 @@ dependencies {
     //Pagination
     def paging_version = "1.0.1"
     implementation "android.arch.paging:runtime:$paging_version"
-
-    //Butter Knife
-    implementation 'com.jakewharton:butterknife:10.2.1'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'
 }
