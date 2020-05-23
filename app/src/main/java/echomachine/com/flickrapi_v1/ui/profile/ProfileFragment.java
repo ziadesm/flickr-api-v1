@@ -12,21 +12,25 @@ import androidx.lifecycle.ViewModelProviders;
 
 import android.com.flickrapi_v1.R;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class ProfileFragment extends Fragment {
 
     private ProfileViewModel profileViewModel;
-    private boolean hasAccount = true;
+    private FirebaseAuth auth;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         profileViewModel =
                 ViewModelProviders.of(this).get(ProfileViewModel.class);
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
+        auth = FirebaseAuth.getInstance();
 
-        if (hasAccount) {
+        if (auth.getCurrentUser() == null) {
             FragmentManager fm = getParentFragmentManager();
             fm.beginTransaction()
-                    .replace(R.id.nav_host_fragment, new RegisterFragment())
+                    .add(R.id.nav_host_fragment, new RegisterFragment())
+                    .addToBackStack(null)
                     .commit();
         }
         return root;

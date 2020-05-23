@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="echomachine.com.flickrapi_v1.ui.profile.RegisterFragment">
 
@@ -97,21 +97,41 @@
             android:id="@+id/progress_bar_register_loading"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_alignTop="@+id/btn_register"
+            android:layout_marginStart="153dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="170dp"
+            android:layout_marginBottom="3dp"
             android:visibility="invisible" />
 
         <Button
             android:id="@+id/btn_register"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
             android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="323dp"
             android:background="@drawable/btn_custom"
             android:fontFamily="@font/roboto_regular"
             android:text="@string/register"
             android:textColor="@android:color/white" />
+
+        <TextView
+            android:id="@+id/register_words"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/progress_bar_register_loading"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="274dp"
+            android:fontFamily="@font/indigo_daisy"
+            android:gravity="center"
+            android:textColor="@android:color/holo_blue_dark"
+            android:text="@string/login_words"
+            android:textSize="17sp" />
 
     </RelativeLayout>
 </LinearLayout>

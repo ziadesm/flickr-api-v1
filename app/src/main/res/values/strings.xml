@@ -30,4 +30,6 @@
     <string name="login_text">Login HERE</string>
     <string name="left_arrow">Left Arrow</string>
     <string name="right_arrow">Right Arrow</string>
+    <string name="register_words">Create new account? SignUp</string>
+    <string name="login_words">Already have an account? Sign in</string>
 </resources>

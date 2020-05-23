@@ -15,12 +15,7 @@
         android:id="@+id/navigation_dashboard"
         android:name="echomachine.com.flickrapi_v1.ui.profile.ProfileFragment"
         android:label="@string/title_profile"
-        tools:layout="@layout/fragment_profile" >
-        <action
-            android:id="@+id/action_navigation_dashboard_to_registerFragment"
-            app:destination="@id/registerFragment"
-            app:popUpTo="@id/navigation_home"/>
-    </fragment>
+        tools:layout="@layout/fragment_profile" />
 
     <fragment
         android:id="@+id/navigation_notifications"
@@ -37,9 +32,5 @@
         android:id="@+id/registerFragment"
         android:name="echomachine.com.flickrapi_v1.ui.profile.RegisterFragment"
         android:label="fragment_register"
-        tools:layout="@layout/fragment_register" >
-        <action
-            android:id="@+id/action_registerFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_register" />
 </navigation>
