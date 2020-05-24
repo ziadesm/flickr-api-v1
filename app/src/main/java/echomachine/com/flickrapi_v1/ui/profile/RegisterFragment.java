@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import android.text.TextUtils;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -25,10 +27,18 @@ public class RegisterFragment extends Fragment {
     private EditText emailEt, nameEt, passwordEt, rePasswordEt;
     private TextView signInTv;
     private Button mRegisterBtn;
-    private ProgressBar progressBar;
+//    private ProgressBar progressBar;
     private FirebaseAuth auth;
 
     public RegisterFragment() {
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        getActivity().getWindow()
+                .setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE
+                                | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        super.onCreate(savedInstanceState);
     }
 
     @Override
@@ -39,9 +49,9 @@ public class RegisterFragment extends Fragment {
         nameEt = root.findViewById(R.id.et_name);
         passwordEt = root.findViewById(R.id.et_password);
         rePasswordEt = root.findViewById(R.id.et_repassword);
-        progressBar = root.findViewById(R.id.progress_bar_register_loading);
+//        progressBar = root.findViewById(R.id.progress_bar_register_loading);
         mRegisterBtn = root.findViewById(R.id.btn_register);
-        signInTv = root.findViewById(R.id.register_words);
+        signInTv = root.findViewById(R.id.login_words);
         auth = FirebaseAuth.getInstance();
 
         signInTv.setOnClickListener(v -> {
@@ -57,9 +67,9 @@ public class RegisterFragment extends Fragment {
     }
 
     private void newRegisterUser() {
-        progressBar.setProgress(30);
-        progressBar.setMax(100);
-        progressBar.setVisibility(View.VISIBLE);
+//        progressBar.setProgress(30);
+//        progressBar.setMax(100);
+//        progressBar.setVisibility(View.VISIBLE);
         mRegisterBtn.setEnabled(false);
         String email = emailEt.getText().toString().trim();
         String rePassword = rePasswordEt.getText().toString().trim();
@@ -95,12 +105,12 @@ public class RegisterFragment extends Fragment {
                         .replace(R.id.nav_host_fragment, new ProfileFragment())
                         .commit();
             } else {
-                progressBar.setVisibility(View.GONE);
+//                progressBar.setVisibility(View.GONE);
                 mRegisterBtn.setEnabled(true);
             }
         });
         mRegisterBtn.setEnabled(true);
-        progressBar.setVisibility(View.GONE);
+//        progressBar.setVisibility(View.GONE);
     }
 
     @Override
