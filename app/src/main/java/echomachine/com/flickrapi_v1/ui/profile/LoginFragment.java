@@ -4,6 +4,7 @@ import android.com.flickrapi_v1.R;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -39,11 +40,12 @@ public class LoginFragment extends Fragment {
         auth = FirebaseAuth.getInstance();
 
         signUpTv.setOnClickListener(v -> {
-            FragmentManager fm = getParentFragmentManager();
-            fm.beginTransaction()
-                    .replace(R.id.nav_host_fragment, new RegisterFragment())
-                    .addToBackStack(null)
-                    .commit();
+            Fragment registerFragment = new RegisterFragment();
+            FragmentTransaction fm = getParentFragmentManager().beginTransaction();
+            fm.replace(R.id.nav_host_fragment, registerFragment);
+            fm.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
+            fm.remove(this);
+            fm.commit();
         });
 
         loginBtn.setOnClickListener(c -> loginToFirebase());

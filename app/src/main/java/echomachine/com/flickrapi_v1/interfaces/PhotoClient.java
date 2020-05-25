@@ -21,7 +21,6 @@ public class PhotoClient {
     public PhotoClient() {
         Retrofit retrofit = new Retrofit.Builder().baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
                 .build();
         apiConfig = retrofit.create(FlickrApiConfig.class);
     }

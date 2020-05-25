@@ -51,9 +51,6 @@ public class NetworkSchedulerService extends JobService implements
     @Override
     public void onNetworkConnectionChanged(boolean isConnected) {
         String message = isConnected ? "Good! Connected to Internet" : "Sorry! Not connected to internet";
-        if (isConnected) {
-            homeViewModel = new HomeViewModel();
-        }
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
 }

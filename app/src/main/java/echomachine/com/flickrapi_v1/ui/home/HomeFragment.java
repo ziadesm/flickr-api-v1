@@ -59,26 +59,20 @@ public class HomeFragment extends Fragment {
 
         aAdapter = new RecentImageAdapter();
         refreshLayout.setOnRefreshListener(() -> {
-
+            homeViewModel = new HomeViewModel();
             homeViewModel.mutableData.observe(getActivity(), photos -> {
                 aAdapter.submitList(photos);
-                refreshLayout.setEnabled(false);
             });
+            refreshLayout.setRefreshing(false);
         });
 
         aRecycler.setLayoutManager(new GridLayoutManager(getActivity(), 3));
-        aRecycler.setHasFixedSize(true);
 
         homeViewModel.getMutableData().observe(getActivity(), photos -> {
             aAdapter.submitList(photos);
         });
 
         aRecycler.setAdapter(aAdapter);
-
-        homeViewModel.mutableData.observe(getActivity(), c -> {
-            aAdapter.submitList(c);
-            refreshLayout.setRefreshing(false);
-        });
         return root;
     }
 
@@ -100,13 +94,16 @@ public class HomeFragment extends Fragment {
             listener = new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
-                    homeViewModel = new HomeViewModel(query);
                     return true;
                 }
 
                 @Override
                 public boolean onQueryTextChange(String newText) {
-                    homeViewModel = new HomeViewModel(newText);
+                    if (newText.length() != 0) {
+                        homeViewModel = new HomeViewModel(newText);
+                    } else {
+                        homeViewModel = new HomeViewModel();
+                    }
                     homeViewModel.mutableData.observe(getActivity(), photos -> aAdapter.submitList(photos));
                     return true;
                 }

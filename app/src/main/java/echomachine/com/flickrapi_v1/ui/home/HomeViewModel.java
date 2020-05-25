@@ -1,4 +1,6 @@
 package echomachine.com.flickrapi_v1.ui.home;
+import android.util.Log;
+
 import echomachine.com.flickrapi_v1.adapter.pagination.PhotoDataSource;
 import echomachine.com.flickrapi_v1.adapter.pagination.PhotoDataSourceFactory;
 import echomachine.com.flickrapi_v1.interfaces.PhotoClient;
@@ -15,12 +17,14 @@ import retrofit2.Call;
 import static echomachine.com.flickrapi_v1.adapter.pagination.PhotoDataSource.FIRST_PAGE;
 
 public class HomeViewModel extends ViewModel {
+    private static final String TAG = "ZiadHome";
     PhotoDataSourceFactory factory;
     MutableLiveData<PhotoDataSource> dataSourceMutableLiveData;
     LiveData<PagedList<_PhotoModel.Photos.Photo>> mutableData;
 
     public HomeViewModel() {
         factory = new PhotoDataSourceFactory(getRecentPhotoPage(FIRST_PAGE));
+        Log.d(TAG, "HomeViewModel: " + 2);
         dataSourceMutableLiveData = factory.getLiveData();
 
         PagedList.Config config = new PagedList.Config.Builder()
@@ -32,7 +36,10 @@ public class HomeViewModel extends ViewModel {
     }
 
     public HomeViewModel(String text) {
-        factory = new PhotoDataSourceFactory(getPhotoSearchPage(text, FIRST_PAGE));
+        if (text != null) {
+            factory = new PhotoDataSourceFactory(getPhotoSearchPage(text, FIRST_PAGE));
+        }
+        Log.d(TAG, "HomeViewModel: " + text + 2);
         dataSourceMutableLiveData = factory.getLiveData();
 
         PagedList.Config config = new PagedList.Config.Builder()
