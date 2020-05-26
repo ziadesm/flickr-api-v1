@@ -76,7 +76,6 @@ public class _PhotoModel {
         }
 
         public static class Photo {
-
             private int farm;
             private String id;
             private int isfamily;
@@ -92,7 +91,7 @@ public class _PhotoModel {
                 @Override
                 public boolean areItemsTheSame(@androidx.annotation.NonNull Photo oldItem
                         , @androidx.annotation.NonNull Photo newItem) {
-                    return oldItem.url_s == newItem.url_s;
+                    return oldItem.url_s.equals(newItem.url_s);
                 }
 
                 @Override

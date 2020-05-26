@@ -21,9 +21,10 @@ public class HomeViewModel extends ViewModel {
     PhotoDataSourceFactory factory;
     MutableLiveData<PhotoDataSource> dataSourceMutableLiveData;
     LiveData<PagedList<_PhotoModel.Photos.Photo>> mutableData;
+    LiveData<PagedList<_PhotoModel.Photos.Photo>> mutableDataSearch;
 
     public HomeViewModel() {
-        factory = new PhotoDataSourceFactory(getRecentPhotoPage(FIRST_PAGE));
+        factory = new PhotoDataSourceFactory(null);
         Log.d(TAG, "HomeViewModel: " + 2);
         dataSourceMutableLiveData = factory.getLiveData();
 
@@ -36,9 +37,7 @@ public class HomeViewModel extends ViewModel {
     }
 
     public HomeViewModel(String text) {
-        if (text != null) {
-            factory = new PhotoDataSourceFactory(getPhotoSearchPage(text, FIRST_PAGE));
-        }
+        factory = new PhotoDataSourceFactory(text);
         Log.d(TAG, "HomeViewModel: " + text + 2);
         dataSourceMutableLiveData = factory.getLiveData();
 
@@ -47,11 +46,15 @@ public class HomeViewModel extends ViewModel {
                 .setPageSize(100)
                 .build();
 
-        mutableData = (new LivePagedListBuilder<Integer, _PhotoModel.Photos.Photo>(factory, config)).build();
+        mutableDataSearch = (new LivePagedListBuilder<Integer, _PhotoModel.Photos.Photo>(factory, config)).build();
     }
 
     public LiveData<PagedList<_PhotoModel.Photos.Photo>> getMutableData() {
         return mutableData;
+    }
+
+    public LiveData<PagedList<_PhotoModel.Photos.Photo>> getMutableDataSearch() {
+        return mutableDataSearch;
     }
 
     public Call<_PhotoModel> getRecentPhotoPage(int page) {

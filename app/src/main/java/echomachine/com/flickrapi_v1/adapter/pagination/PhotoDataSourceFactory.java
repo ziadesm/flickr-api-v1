@@ -1,24 +1,20 @@
 package echomachine.com.flickrapi_v1.adapter.pagination;
-import echomachine.com.flickrapi_v1.pojo._PhotoModel;
-
 import androidx.lifecycle.MutableLiveData;
 import androidx.paging.DataSource;
-
-import retrofit2.Call;
 
 public class PhotoDataSourceFactory extends DataSource.Factory {
     PhotoDataSource photoDataSource;
     MutableLiveData<PhotoDataSource> liveData;
-    Call<_PhotoModel> call;
+    String text;
 
-    public PhotoDataSourceFactory(Call<_PhotoModel> call) {
+    public PhotoDataSourceFactory(String text) {
         this.liveData = new MutableLiveData<>();
-        this.call = call;
+        this.text = text;
     }
 
     @Override
     public DataSource create() {
-        photoDataSource = new PhotoDataSource(call);
+        photoDataSource = new PhotoDataSource(text);
         liveData.postValue(photoDataSource);
         return photoDataSource;
     }

@@ -94,17 +94,18 @@ public class HomeFragment extends Fragment {
             listener = new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
+                    if (query.length() != 0) {
+                        homeViewModel = new HomeViewModel(query);
+                    } else {
+                        homeViewModel = new HomeViewModel();
+                    }
+                    homeViewModel.mutableDataSearch
+                            .observe(getActivity(), photos -> aAdapter.submitList(photos));
                     return true;
                 }
 
                 @Override
                 public boolean onQueryTextChange(String newText) {
-                    if (newText.length() != 0) {
-                        homeViewModel = new HomeViewModel(newText);
-                    } else {
-                        homeViewModel = new HomeViewModel();
-                    }
-                    homeViewModel.mutableData.observe(getActivity(), photos -> aAdapter.submitList(photos));
                     return true;
                 }
             };

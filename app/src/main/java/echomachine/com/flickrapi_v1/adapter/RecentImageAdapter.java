@@ -29,23 +29,20 @@ public class RecentImageAdapter extends PagedListAdapter<Photo, RecentImageAdapt
     @Override
     public void onBindViewHolder(@NonNull ImageViewHolder holder, int position) {
         Photo item = getItem(position);
-        if (item.getTitle() == null) {
-            holder.titleTv.setText(R.string.no_image_found);
-        } else {
-            holder.titleTv.setText(item.getTitle());
-        }
         Picasso.get()
                 .load(item.getUrl_s())
+                .placeholder(R.drawable.ic_place_holder_home)
+                .fit()
+                .centerCrop()
                 .into(holder.imageView);
     }
 
         public class ImageViewHolder extends RecyclerView.ViewHolder {
-        ImageView imageView;
-        TextView titleTv;
+        ImageView imageView, loveImageView;
         public ImageViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.image_header);
-            titleTv = itemView.findViewById(R.id.title_image_tv);
+            loveImageView = itemView.findViewById(R.id.love_border_header);
         }
     }
 }
