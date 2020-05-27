@@ -1,11 +1,13 @@
 package echomachine.com.flickrapi_v1.adapter;
 import android.com.flickrapi_v1.R;
+
+import echomachine.com.flickrapi_v1.interfaces.OnDoubleClickListener;
 import echomachine.com.flickrapi_v1.pojo._PhotoModel.Photos.Photo;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.paging.PagedListAdapter;
@@ -35,10 +37,27 @@ public class RecentImageAdapter extends PagedListAdapter<Photo, RecentImageAdapt
                 .fit()
                 .centerCrop()
                 .into(holder.imageView);
+
+        holder.imageView.setOnClickListener(new OnDoubleClickListener() {
+            @Override
+            public void onDoubleClick(View v) {
+                if (holder.loveImageView.getVisibility() != v.getVisibility()) {
+                    holder.loveImageView.setVisibility(View.VISIBLE);
+                } else {
+                    holder.loveImageView.setVisibility(View.INVISIBLE);
+                }
+            }
+
+            @Override
+            public void onSingleClick(View v) {
+
+            }
+        });
     }
 
-        public class ImageViewHolder extends RecyclerView.ViewHolder {
+    public class ImageViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView, loveImageView;
+
         public ImageViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.image_header);

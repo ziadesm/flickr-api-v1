@@ -3,6 +3,8 @@ import android.app.SearchManager;
 import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
 import echomachine.com.flickrapi_v1.adapter.RecentImageAdapter;
+import echomachine.com.flickrapi_v1.interfaces.ItemClickSupport;
+import echomachine.com.flickrapi_v1.interfaces.OnDoubleClickListener;
 import echomachine.com.flickrapi_v1.receiver.network.NetworkSchedulerService;
 import android.content.ComponentName;
 import android.content.Context;
@@ -29,6 +31,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.com.flickrapi_v1.R;
 import android.widget.SearchView;
+
+import com.squareup.picasso.Picasso;
 
 import static android.content.Context.JOB_SCHEDULER_SERVICE;
 import static android.content.Context.SEARCH_SERVICE;

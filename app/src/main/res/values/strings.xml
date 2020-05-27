@@ -8,11 +8,11 @@
     <string name="network_available">Back Online</string>
     <string name="network_available_message">You become online again</string>
     <string name="network_not_available">You\'re Offline</string>
-    <string name="network_not_available_message">Switch your celler data or WiFi to Reconnect, then RETRY</string>
+    <string name="network_not_available_message">Switch your cellar-data or WiFi to Reconnect, then RETRY</string>
     <string name="network_not_available_retry">"Retry "</string>
     <string name="no_image_found">There\'s no image in here</string>
     <string name="search_title">Search</string>
-    <string name="search_hint">Search for enything!</string>
+    <string name="search_hint">Search for anything !</string>
 
     <string name="swipe_left_for_register">Swipe Left for Register</string>
     <string name="login">Login</string>
@@ -34,7 +34,7 @@
     <string name="login_words">Already have an account? Sign in</string>
     <string name="profile_card_likes">Likes</string>
     <string name="profile_phone_num_hint">+266 225 225</string>
-    <string name="profile_usename_text">Username</string>
+    <string name="profile_username_text">Username</string>
     <string name="profile_photo_image">Profile Photo</string>
     <string name="profile_card_likes_num">20</string>
     <string name="profile_download_tap">Downloaded</string>
