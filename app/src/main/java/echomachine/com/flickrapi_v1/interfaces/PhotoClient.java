@@ -3,7 +3,6 @@ package echomachine.com.flickrapi_v1.interfaces;
 import echomachine.com.flickrapi_v1.pojo._PhotoModel;
 import android.util.Log;
 
-import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -34,10 +33,17 @@ public class PhotoClient {
 
     public Call<_PhotoModel> getRecentPhotoPage(int page) {
         Log.d(TAG, "getRecentPhotoPage: " + page);
-        return apiConfig.getRecentPhotoPage("flickr.photos.getRecent", API_KEY, URL_S, page, JSON_FORMAT, NOJSON_CALLBACK);
+        return apiConfig.getRecentPhotoPage("flickr.photos.getRecent"
+                , API_KEY, URL_S, page, JSON_FORMAT, NOJSON_CALLBACK);
     }
 
     public Call<_PhotoModel> getPhotoSearchPage(String text, int page) {
-        return apiConfig.getPhotoSearchPage("flickr.photos.search", API_KEY, text, URL_S, page, JSON_FORMAT, NOJSON_CALLBACK);
+        return apiConfig.getPhotoSearchPage("flickr.photos.search"
+                , API_KEY, text, URL_S, page, JSON_FORMAT, NOJSON_CALLBACK);
+    }
+
+    public Call<_PhotoModel> getProfilePhotosPage(String user_id, int page) {
+        return apiConfig.getProfilePhotosPage("flickr.people.getPhotos"
+                , API_KEY, user_id, URL_S, page, JSON_FORMAT, NOJSON_CALLBACK);
     }
 }
