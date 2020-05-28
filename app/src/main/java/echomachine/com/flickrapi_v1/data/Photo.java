@@ -15,14 +15,6 @@ public class Photo {
     @ColumnInfo(name = "liked_or_not")
     private boolean liked;
 
-    public Photo(int id, String url_s, String user_id, boolean liked) {
-        this.id = id;
-        this.url_s = url_s;
-        this.user_id = user_id;
-        this.liked = liked;
-    }
-
-    @Ignore
     public Photo(String url_s, String user_id, boolean liked) {
         this.url_s = url_s;
         this.user_id = user_id;

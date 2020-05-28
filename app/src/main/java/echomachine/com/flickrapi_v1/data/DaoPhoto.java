@@ -3,21 +3,24 @@ import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
-import androidx.room.Update;
 
 import java.util.List;
 
-import io.reactivex.Single;
+import io.reactivex.Completable;
 
 @Dao
 public interface DaoPhoto {
     @Query("Select * from liked_photo")
     LiveData<List<Photo>> getPhotoLikedList();
 
-    @Insert
-    void insertPhoto(Photo photo);
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    Completable insertPhoto(Photo photo);
 
     @Delete
-    void deletePhoto(Photo photo);
+    Completable deletePhoto(Photo photo);
+
+    @Query("DELETE FROM liked_photo")
+    Completable deleteAllPhoto();
 }

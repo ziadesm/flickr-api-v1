@@ -3,6 +3,7 @@ import android.app.SearchManager;
 import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
 import echomachine.com.flickrapi_v1.adapter.RecentImageAdapter;
+import echomachine.com.flickrapi_v1.data.RepositoryPhoto;
 import echomachine.com.flickrapi_v1.interfaces.ItemClickSupport;
 import echomachine.com.flickrapi_v1.interfaces.OnDoubleClickListener;
 import echomachine.com.flickrapi_v1.receiver.network.NetworkSchedulerService;
@@ -31,6 +32,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.com.flickrapi_v1.R;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -46,12 +48,14 @@ public class HomeFragment extends Fragment {
     SwipeRefreshLayout refreshLayout;
     private SearchView searchView = null;
     private SearchView.OnQueryTextListener listener;
+    private RepositoryPhoto repo;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
         aRecycler = root.findViewById(R.id.recycler);
         refreshLayout = root.findViewById(R.id.home_fragment_layout);
+        repo = new RepositoryPhoto(getContext());
         refreshLayout.setColorSchemeResources(R.color.dialog_background_pri
                 , R.color.colorPrimaryDark
                 , R.color.dialog_surface);
@@ -61,7 +65,7 @@ public class HomeFragment extends Fragment {
         homeViewModel =
                 ViewModelProviders.of(this).get(HomeViewModel.class);
 
-        aAdapter = new RecentImageAdapter();
+        aAdapter = new RecentImageAdapter(getContext());
         refreshLayout.setOnRefreshListener(() -> {
             homeViewModel = new HomeViewModel();
             homeViewModel.mutableData.observe(getActivity(), photos -> {
@@ -75,6 +79,9 @@ public class HomeFragment extends Fragment {
         homeViewModel.getMutableData().observe(getActivity(), photos -> {
             aAdapter.submitList(photos);
         });
+
+        repo.getAllLikedPhoto().observe(getActivity()
+                , photos -> Toast.makeText(getContext(), "" + photos.size(), Toast.LENGTH_LONG).show());
 
         aRecycler.setAdapter(aAdapter);
         return root;

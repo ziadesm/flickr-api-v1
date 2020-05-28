@@ -1,5 +1,4 @@
 package echomachine.com.flickrapi_v1.ui.profile;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -32,7 +31,6 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         auth = FirebaseAuth.getInstance();
-
         if (auth.getCurrentUser() == null) {
             Fragment registerFragment = new RegisterFragment();
             FragmentTransaction fm = getParentFragmentManager().beginTransaction();
