@@ -9,6 +9,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import android.text.TextUtils;
 import android.util.Log;
@@ -30,6 +32,7 @@ public class RegisterFragment extends Fragment {
     private TextView signInTv;
     private Button mRegisterBtn;
     private FirebaseAuth auth;
+    private NavController navController;
 
     public RegisterFragment() {
     }
@@ -103,5 +106,12 @@ public class RegisterFragment extends Fragment {
                 mRegisterBtn.setEnabled(true);
             }
         });
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+        navController.popBackStack(R.id.navigation_home, false);
     }
 }

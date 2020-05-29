@@ -37,7 +37,12 @@
         android:id="@+id/navigation_register"
         android:name="echomachine.com.flickrapi_v1.ui.profile.RegisterFragment"
         android:label="@string/register"
-        tools:layout="@layout/fragment_register" />
+        tools:layout="@layout/fragment_register" >
+        <action
+            android:id="@+id/action_navigation_register_to_navigation_home"
+            app:destination="@id/navigation_home"
+            app:popUpTo="@id/navigation_home"/>
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_selected"
