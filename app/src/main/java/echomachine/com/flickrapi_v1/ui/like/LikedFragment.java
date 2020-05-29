@@ -13,14 +13,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.com.flickrapi_v1.R;
 
-public class LikedPhoto extends Fragment {
+public class LikedFragment extends Fragment {
 
     private LikedPhotoViewModel mViewModel;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.liked_photo_fragment, container, false);
+        View view = inflater.inflate(R.layout.fragment_liked, container, false);
         mViewModel = ViewModelProviders.of(this).get(LikedPhotoViewModel.class);
 
         return view;

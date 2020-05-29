@@ -6,9 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.Navigation;
 
 import android.com.flickrapi_v1.R;
 
@@ -24,12 +26,12 @@ public class ProfileFragment extends Fragment {
         profileViewModel =
                 ViewModelProviders.of(this).get(ProfileViewModel.class);
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
-
         return root;
     }
 
     @Override
-    public void onAttach(@NonNull Context context) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         auth = FirebaseAuth.getInstance();
         if (auth.getCurrentUser() == null) {
             Fragment registerFragment = new RegisterFragment();
@@ -39,6 +41,5 @@ public class ProfileFragment extends Fragment {
             fm.remove(this);
             fm.commit();
         }
-        super.onAttach(context);
     }
 }

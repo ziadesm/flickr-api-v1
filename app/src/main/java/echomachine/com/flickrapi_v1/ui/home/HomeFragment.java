@@ -26,6 +26,9 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -53,6 +56,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
+
         aRecycler = root.findViewById(R.id.recycler);
         refreshLayout = root.findViewById(R.id.home_fragment_layout);
         repo = new RepositoryPhoto(getContext());
@@ -65,7 +69,7 @@ public class HomeFragment extends Fragment {
         homeViewModel =
                 ViewModelProviders.of(this).get(HomeViewModel.class);
 
-        aAdapter = new RecentImageAdapter(getContext());
+        aAdapter = new RecentImageAdapter(getContext(), this);
         refreshLayout.setOnRefreshListener(() -> {
             homeViewModel = new HomeViewModel();
             homeViewModel.mutableData.observe(getActivity(), photos -> {
@@ -79,9 +83,6 @@ public class HomeFragment extends Fragment {
         homeViewModel.getMutableData().observe(getActivity(), photos -> {
             aAdapter.submitList(photos);
         });
-
-        repo.getAllLikedPhoto().observe(getActivity()
-                , photos -> Toast.makeText(getContext(), "" + photos.size(), Toast.LENGTH_LONG).show());
 
         aRecycler.setAdapter(aAdapter);
         return root;

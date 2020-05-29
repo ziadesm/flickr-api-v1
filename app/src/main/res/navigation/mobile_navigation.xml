@@ -9,10 +9,14 @@
         android:id="@+id/navigation_home"
         android:name="echomachine.com.flickrapi_v1.ui.home.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_selected"
+            app:destination="@id/navigation_selected" />
+    </fragment>
 
     <fragment
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/navigation_profile"
         android:name="echomachine.com.flickrapi_v1.ui.profile.ProfileFragment"
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile" />
@@ -22,15 +26,28 @@
         android:name="echomachine.com.flickrapi_v1.ui.notifications.NotificationsFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
+
     <fragment
-        android:id="@+id/loginFragment"
+        android:id="@+id/navigation_login"
         android:name="echomachine.com.flickrapi_v1.ui.profile.LoginFragment"
-        android:label="fragment_login"
+        android:label="@string/login"
         tools:layout="@layout/fragment_login" />
 
     <fragment
-        android:id="@+id/registerFragment"
+        android:id="@+id/navigation_register"
         android:name="echomachine.com.flickrapi_v1.ui.profile.RegisterFragment"
-        android:label="fragment_register"
+        android:label="@string/register"
         tools:layout="@layout/fragment_register" />
+
+    <fragment
+        android:id="@+id/navigation_selected"
+        android:name="echomachine.com.flickrapi_v1.ui.selected.SelectedFragment"
+        android:label="@string/show_photo"
+        tools:layout="@layout/fragment_selected"/>
+
+    <fragment
+        android:id="@+id/navigation_liked"
+        android:name="echomachine.com.flickrapi_v1.ui.like.LikedFragment"
+        android:label="@string/liked_fragment"
+        tools:layout="@layout/fragment_liked" />
 </navigation>

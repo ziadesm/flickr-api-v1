@@ -42,4 +42,6 @@
     <string name="profile_email_text">example@orgnization.com</string>
     <string name="todo">TODO</string>
     <string name="phone_number_register">Phone</string>
+    <string name="show_photo">ImageViewer</string>
+    <string name="liked_fragment">My Photos</string>
 </resources>
