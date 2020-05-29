@@ -44,4 +44,8 @@
     <string name="phone_number_register">Phone</string>
     <string name="show_photo">ImageViewer</string>
     <string name="liked_fragment">My Photos</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="retry_checking">Check Again</string>
+    <string name="offline_fragment">Offline</string>
 </resources>

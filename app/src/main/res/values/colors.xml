@@ -8,4 +8,5 @@
     <color name="dialog_background_pri">#2C9F31</color>
     <color name="dialog_background_sec">#3CA140</color>
     <color name="dialog_surface">#47AAB6</color>
+    <color name="black_overlay">#66000000</color>
 </resources>

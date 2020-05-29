@@ -1,18 +1,14 @@
 package echomachine.com.flickrapi_v1.ui.home;
 import android.app.SearchManager;
-import android.app.job.JobInfo;
-import android.app.job.JobScheduler;
+
+import echomachine.com.flickrapi_v1.MyApp;
 import echomachine.com.flickrapi_v1.adapter.RecentImageAdapter;
 import echomachine.com.flickrapi_v1.data.RepositoryPhoto;
-import echomachine.com.flickrapi_v1.interfaces.ItemClickSupport;
-import echomachine.com.flickrapi_v1.interfaces.OnDoubleClickListener;
-import echomachine.com.flickrapi_v1.receiver.network.NetworkSchedulerService;
-import android.content.ComponentName;
-import android.content.Context;
+import echomachine.com.flickrapi_v1.receiver.network.ConnectivityReceiver;
+
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -23,26 +19,20 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.com.flickrapi_v1.R;
 import android.widget.SearchView;
-import android.widget.Toast;
 
-import com.squareup.picasso.Picasso;
-
-import static android.content.Context.JOB_SCHEDULER_SERVICE;
 import static android.content.Context.SEARCH_SERVICE;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements ConnectivityReceiver.ConnectivityReceiverListener {
 
     private static final String TAG = "ZiadHomeFragment";
     private HomeViewModel homeViewModel;
@@ -52,6 +42,7 @@ public class HomeFragment extends Fragment {
     private SearchView searchView = null;
     private SearchView.OnQueryTextListener listener;
     private RepositoryPhoto repo;
+    private NavController navController;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -63,8 +54,6 @@ public class HomeFragment extends Fragment {
         refreshLayout.setColorSchemeResources(R.color.dialog_background_pri
                 , R.color.colorPrimaryDark
                 , R.color.dialog_surface);
-
-        scheduleJob();
 
         homeViewModel =
                 ViewModelProviders.of(this).get(HomeViewModel.class);
@@ -92,6 +81,7 @@ public class HomeFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        checkInternetConnection();
     }
 
     @Override
@@ -126,39 +116,34 @@ public class HomeFragment extends Fragment {
         super.onCreateOptionsMenu(menu, inflater);
     }
 
-    private boolean isOnline() {
-        ConnectivityManager cm = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = null;
-        if (cm != null) {
-            activeNetworkInfo = cm.getActiveNetworkInfo();
+    private void checkInternetConnection() {
+        boolean connected = ConnectivityReceiver.isConnected();
+        if (!connected) {
+            showOfflineFragment();
         }
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    private void scheduleJob() {
-        JobInfo myJob = new JobInfo.Builder(0, new ComponentName(getActivity(), NetworkSchedulerService.class))
-                .setRequiresCharging(true)
-                .setMinimumLatency(1000)
-                .setOverrideDeadline(2000)
-                .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
-                .setPersisted(true)
-                .build();
-
-        JobScheduler jobScheduler = (JobScheduler) getActivity().getSystemService(JOB_SCHEDULER_SERVICE);
-        jobScheduler.schedule(myJob);
+    private void showOfflineFragment() {
+        navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+        navController.navigate(R.id.navigation_offline);
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        Intent intent = new Intent(getActivity(), NetworkSchedulerService.class);
-        getActivity().startService(intent);
+    public void onResume() {
+        super.onResume();
+        final IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+
+        ConnectivityReceiver receiver = new ConnectivityReceiver();
+        getActivity().registerReceiver(receiver, intentFilter);
+
+        MyApp.getINSTANCE().setConnectivityListener(this);
     }
 
     @Override
-    public void onStop() {
-        getActivity().stopService(new Intent(getActivity(), NetworkSchedulerService.class));
-        super.onStop();
+    public void onNetworkConnectionChanged(boolean isConnected) {
+        if (!isConnected) {
+            showOfflineFragment();
+        }
     }
 }

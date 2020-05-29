@@ -55,4 +55,10 @@
         android:name="echomachine.com.flickrapi_v1.ui.like.LikedFragment"
         android:label="@string/liked_fragment"
         tools:layout="@layout/fragment_liked" />
+
+    <fragment
+        android:id="@+id/navigation_offline"
+        android:name="echomachine.com.flickrapi_v1.ui.home.OfflineFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_offline" />
 </navigation>

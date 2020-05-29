@@ -1,6 +1,9 @@
 package echomachine.com.flickrapi_v1;
 
 import android.com.flickrapi_v1.R;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -13,6 +16,8 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+
+import echomachine.com.flickrapi_v1.receiver.network.ConnectivityReceiver;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "ZiadActivity";
@@ -33,5 +38,11 @@ public class MainActivity extends AppCompatActivity {
                 .build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
+
+
     }
+
+
+
+
 }
