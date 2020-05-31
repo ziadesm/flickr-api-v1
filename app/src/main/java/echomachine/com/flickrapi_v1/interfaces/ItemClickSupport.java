@@ -1,5 +1,4 @@
 package echomachine.com.flickrapi_v1.interfaces;
-
 import android.com.flickrapi_v1.R;
 import android.view.View;
 
@@ -63,14 +62,14 @@ public class ItemClickSupport {
         return support;
     }
 
-    public ItemClickSupport setOnItemClickListener(OnItemClickListener listener) {
-        mOnItemClickListener = listener;
-        return this;
-    }
-
     private void detach(RecyclerView view) {
         view.removeOnChildAttachStateChangeListener(mAttachListener);
         view.setTag(R.id.image_header, null);
+    }
+
+    public ItemClickSupport setOnItemClickListener(OnItemClickListener listener) {
+        mOnItemClickListener = listener;
+        return this;
     }
 
     public interface OnItemClickListener {

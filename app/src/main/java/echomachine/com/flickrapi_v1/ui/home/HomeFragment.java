@@ -22,6 +22,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -34,14 +35,13 @@ import static android.content.Context.SEARCH_SERVICE;
 
 public class HomeFragment extends Fragment implements ConnectivityReceiver.ConnectivityReceiverListener {
 
-    private static final String TAG = "ZiadHomeFragment";
+    private static final String TAG = "ZiadHome";
     private HomeViewModel homeViewModel;
-    RecyclerView aRecycler;
-    RecentImageAdapter aAdapter;
-    SwipeRefreshLayout refreshLayout;
+    private RecyclerView aRecycler;
+    private RecentImageAdapter aAdapter;
+    private SwipeRefreshLayout refreshLayout;
     private SearchView searchView = null;
     private SearchView.OnQueryTextListener listener;
-    private RepositoryPhoto repo;
     private NavController navController;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -50,7 +50,6 @@ public class HomeFragment extends Fragment implements ConnectivityReceiver.Conne
 
         aRecycler = root.findViewById(R.id.recycler);
         refreshLayout = root.findViewById(R.id.home_fragment_layout);
-        repo = new RepositoryPhoto(getContext());
         refreshLayout.setColorSchemeResources(R.color.dialog_background_pri
                 , R.color.colorPrimaryDark
                 , R.color.dialog_surface);

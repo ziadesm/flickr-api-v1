@@ -8,18 +8,19 @@ import androidx.room.Query;
 
 import java.util.List;
 
+import echomachine.com.flickrapi_v1.pojo.LikedPhoto;
 import io.reactivex.Completable;
 
 @Dao
 public interface DaoPhoto {
     @Query("Select * from liked_photo")
-    LiveData<List<Photo>> getPhotoLikedList();
+    LiveData<List<LikedPhoto>> getPhotoLikedList();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    Completable insertPhoto(Photo photo);
+    Completable insertPhoto(LikedPhoto likedPhoto);
 
     @Delete
-    Completable deletePhoto(Photo photo);
+    Completable deletePhoto(LikedPhoto likedPhoto);
 
     @Query("DELETE FROM liked_photo")
     Completable deleteAllPhoto();
