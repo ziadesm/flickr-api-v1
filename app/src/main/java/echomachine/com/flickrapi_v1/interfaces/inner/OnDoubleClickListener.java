@@ -1,4 +1,4 @@
-package echomachine.com.flickrapi_v1.interfaces;
+package echomachine.com.flickrapi_v1.interfaces.inner;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.View;

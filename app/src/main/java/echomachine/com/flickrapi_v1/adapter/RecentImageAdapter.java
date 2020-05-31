@@ -21,7 +21,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.squareup.picasso.Picasso;
 
 import echomachine.com.flickrapi_v1.data.RepositoryPhoto;
-import echomachine.com.flickrapi_v1.interfaces.OnDoubleClickListener;
+import echomachine.com.flickrapi_v1.interfaces.inner.OnDoubleClickListener;
 import echomachine.com.flickrapi_v1.pojo.LikedPhoto;
 import echomachine.com.flickrapi_v1.pojo._PhotoModel.Photos.Photo;
 
