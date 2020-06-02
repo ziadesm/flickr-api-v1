@@ -5,7 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import android.com.flickrapi_v1.R;
+import echomachine.com.flickrapi_v1.R;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;

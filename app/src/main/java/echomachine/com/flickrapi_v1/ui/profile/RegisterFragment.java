@@ -1,13 +1,10 @@
 package echomachine.com.flickrapi_v1.ui.profile;
-import android.com.flickrapi_v1.R;
+import echomachine.com.flickrapi_v1.R;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -82,12 +79,7 @@ public class RegisterFragment extends Fragment {
 
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                Fragment registerFragment = new ProfileFragment();
-                FragmentTransaction fm = getParentFragmentManager().beginTransaction();
-                fm.replace(R.id.nav_host_fragment, registerFragment);
-                fm.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                fm.remove(this);
-                fm.commit();
+                navController.navigate(R.id.navigation_profile);
             } else {
                 Log.d(TAG, "newRegisterUser: "+ task.getException().getMessage());
                 mRegisterBtn.setEnabled(true);
@@ -98,7 +90,6 @@ public class RegisterFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
         navController.navigate(R.id.navigation_home);
     }
 }

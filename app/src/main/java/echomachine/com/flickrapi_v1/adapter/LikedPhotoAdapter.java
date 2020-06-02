@@ -1,6 +1,6 @@
 package echomachine.com.flickrapi_v1.adapter;
 
-import android.com.flickrapi_v1.R;
+import echomachine.com.flickrapi_v1.R;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

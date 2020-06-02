@@ -13,7 +13,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import android.com.flickrapi_v1.R;
+import echomachine.com.flickrapi_v1.R;
 
 import com.google.firebase.auth.FirebaseAuth;
 

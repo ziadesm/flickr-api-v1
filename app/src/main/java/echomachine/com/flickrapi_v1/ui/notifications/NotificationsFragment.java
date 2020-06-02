@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
-import android.com.flickrapi_v1.R;
+import echomachine.com.flickrapi_v1.R;
 
 public class NotificationsFragment extends Fragment {
 

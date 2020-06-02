@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.com.flickrapi_v1.R;
+import echomachine.com.flickrapi_v1.R;
 
 import echomachine.com.flickrapi_v1.adapter.LikedPhotoAdapter;
 import echomachine.com.flickrapi_v1.data.RepositoryPhoto;

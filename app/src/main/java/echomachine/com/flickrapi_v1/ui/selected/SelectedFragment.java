@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModelProviders;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.com.flickrapi_v1.R;
+import echomachine.com.flickrapi_v1.R;
 
 public class SelectedFragment extends Fragment {
 

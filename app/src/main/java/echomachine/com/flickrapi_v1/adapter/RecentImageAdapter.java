@@ -1,7 +1,7 @@
 package echomachine.com.flickrapi_v1.adapter;
 
 import android.annotation.SuppressLint;
-import android.com.flickrapi_v1.R;
+import echomachine.com.flickrapi_v1.R;
 import android.content.Context;
 import android.os.CountDownTimer;
 import android.view.LayoutInflater;

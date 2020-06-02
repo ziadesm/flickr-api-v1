@@ -1,5 +1,5 @@
 package echomachine.com.flickrapi_v1.interfaces.inner;
-import android.com.flickrapi_v1.R;
+import echomachine.com.flickrapi_v1.R;
 import android.view.View;
 
 import androidx.recyclerview.widget.RecyclerView;

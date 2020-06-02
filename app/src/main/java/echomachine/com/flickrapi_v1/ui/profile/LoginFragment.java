@@ -1,6 +1,6 @@
 package echomachine.com.flickrapi_v1.ui.profile;
 
-import android.com.flickrapi_v1.R;
+import echomachine.com.flickrapi_v1.R;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;

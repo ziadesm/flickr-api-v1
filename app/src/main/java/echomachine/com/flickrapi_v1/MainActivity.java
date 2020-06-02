@@ -1,6 +1,6 @@
 package echomachine.com.flickrapi_v1;
 
-import android.com.flickrapi_v1.R;
+import echomachine.com.flickrapi_v1.R;
 import android.os.Bundle;
 import android.view.View;
 

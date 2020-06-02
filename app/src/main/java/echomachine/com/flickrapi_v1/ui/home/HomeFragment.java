@@ -1,5 +1,4 @@
 package echomachine.com.flickrapi_v1.ui.home;
-import android.app.ActionBar;
 import android.app.SearchManager;
 
 import echomachine.com.flickrapi_v1.MyApp;
@@ -18,7 +17,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
@@ -27,7 +25,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import android.com.flickrapi_v1.R;
+import echomachine.com.flickrapi_v1.R;
 import android.widget.SearchView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -82,6 +80,8 @@ public class HomeFragment extends Fragment implements ConnectivityReceiver.Conne
                 super.onScrollStateChanged(recyclerView, newState);
                 if (View.SCROLL_AXIS_HORIZONTAL == newState) {
                     navView.setVisibility(View.GONE);
+                } else if (View.SCROLL_AXIS_NONE == newState) {
+                    navView.setVisibility(View.VISIBLE);
                 }
             }
         });
