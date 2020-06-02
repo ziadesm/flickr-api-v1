@@ -37,12 +37,6 @@ public class ProfileFragment extends Fragment {
         super.onCreate(savedInstanceState);
         auth = FirebaseAuth.getInstance();
         if (auth.getCurrentUser() == null) {
-//            Fragment registerFragment = new RegisterFragment();
-//            FragmentTransaction fm = getParentFragmentManager().beginTransaction();
-//            fm.replace(R.id.nav_host_fragment, registerFragment);
-//            fm.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-//            fm.remove(this);
-//            fm.commit();
             navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
             navController.navigate(R.id.navigation_register);
         }

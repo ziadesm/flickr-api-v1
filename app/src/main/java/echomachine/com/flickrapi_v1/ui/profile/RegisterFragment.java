@@ -38,14 +38,6 @@ public class RegisterFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        getActivity().getWindow()
-                .setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE
-                                | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_register, container, false);
@@ -56,16 +48,11 @@ public class RegisterFragment extends Fragment {
         mRegisterBtn = root.findViewById(R.id.btn_register);
         signInTv = root.findViewById(R.id.login_words);
         auth = FirebaseAuth.getInstance();
+        navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
 
         signInTv.setOnClickListener(v -> {
-                Fragment registerFragment = new LoginFragment();
-                FragmentTransaction fm = getParentFragmentManager().beginTransaction();
-                fm.replace(R.id.nav_host_fragment, registerFragment);
-                fm.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                fm.remove(this);
-                fm.commit();
+            navController.navigate(R.id.navigation_login);
         });
-
         mRegisterBtn.setOnClickListener(v -> newRegisterUser());
         return root;
     }
@@ -112,6 +99,6 @@ public class RegisterFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
-        navController.popBackStack(R.id.navigation_home, false);
+        navController.navigate(R.id.navigation_home);
     }
 }

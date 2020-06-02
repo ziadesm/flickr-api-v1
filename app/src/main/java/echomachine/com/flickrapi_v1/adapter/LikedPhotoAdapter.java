@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,9 +37,16 @@ public class LikedPhotoAdapter extends RecyclerView.Adapter<LikedPhotoAdapter.Li
 
     @Override
     public void onBindViewHolder(@NonNull LikedViewModel holder, int position) {
-        if (position == mList.size() - 1) {
+        LikedPhoto photo = mList.get(position);
+        Picasso.get()
+                .load(photo.getUrl_s())
+                .placeholder(R.drawable.ic_place_holder_home)
+                .fit()
+                .centerCrop()
+                .into(holder.imageView);
+        if (position == mList.size()) {
             listener.OnBottomReach(position);
-        } else if (position == 0 || position == 1) {
+        } else if (mList.size() >= 16 && (position == 0 || position == 1)) {
             listener.OnTopReach(position);
         }
     }
@@ -57,8 +66,7 @@ public class LikedPhotoAdapter extends RecyclerView.Adapter<LikedPhotoAdapter.Li
         private ImageView imageView;
         public LikedViewModel(@NonNull View itemView) {
             super(itemView);
-            itemView.findViewById(R.id.image_header);
-            itemView.findViewById(R.id.love_border_header);
+            imageView = itemView.findViewById(R.id.image_header);
         }
     }
 }

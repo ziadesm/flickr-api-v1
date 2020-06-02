@@ -22,7 +22,7 @@
             android:fontFamily="@font/indigo_daisy"
             android:text="@string/register"
             android:textAlignment="center"
-            android:textSize="50sp" />
+            android:textSize="30sp" />
 
         <TextView
             android:id="@+id/tv_subtitle"

@@ -1,4 +1,5 @@
 package echomachine.com.flickrapi_v1.ui.home;
+import android.app.ActionBar;
 import android.app.SearchManager;
 
 import echomachine.com.flickrapi_v1.MyApp;
@@ -17,6 +18,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
@@ -51,6 +53,7 @@ public class HomeFragment extends Fragment implements ConnectivityReceiver.Conne
         navView = getActivity().findViewById(R.id.nav_view);
         aRecycler = root.findViewById(R.id.recycler);
         refreshLayout = root.findViewById(R.id.home_fragment_layout);
+
         refreshLayout.setColorSchemeResources(R.color.dialog_background_pri
                 , R.color.colorPrimaryDark
                 , R.color.dialog_surface);
@@ -77,10 +80,8 @@ public class HomeFragment extends Fragment implements ConnectivityReceiver.Conne
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                if (View.OVER_SCROLL_IF_CONTENT_SCROLLS == newState) {
+                if (View.SCROLL_AXIS_HORIZONTAL == newState) {
                     navView.setVisibility(View.GONE);
-                } else {
-                    navView.setVisibility(View.VISIBLE);
                 }
             }
         });

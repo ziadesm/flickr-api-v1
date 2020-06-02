@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/login_text"
-            android:textSize="50sp"
+            android:textSize="30sp"
             android:fontFamily="@font/indigo_daisy"
             android:layout_marginStart="25dp"
             android:layout_marginBottom="10dp"/>

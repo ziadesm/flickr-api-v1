@@ -2,12 +2,16 @@ package echomachine.com.flickrapi_v1;
 
 import android.com.flickrapi_v1.R;
 import android.os.Bundle;
+import android.view.View;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
@@ -32,5 +36,34 @@ public class MainActivity extends AppCompatActivity{
                 .build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
+
+        navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
+            switch (destination.getId()) {
+                case R.id.navigation_login:
+                    hideBars();
+                    break;
+                case R.id.navigation_register:
+                    hideBars();
+                    break;
+                case R.id.navigation_offline:
+                    getSupportActionBar().hide();
+                    break;
+                case R.id.navigation_splash:
+                    hideBars();
+                    break;
+                default:
+                    showBars();
+            }
+        });
+    }
+
+    private void hideBars() {
+        navView.setVisibility(View.GONE);
+        getSupportActionBar().hide();
+    }
+
+    private void showBars() {
+        navView.setVisibility(View.VISIBLE);
+        getSupportActionBar().show();
     }
 }
