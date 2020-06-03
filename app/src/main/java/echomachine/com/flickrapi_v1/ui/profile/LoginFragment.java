@@ -2,9 +2,14 @@ package echomachine.com.flickrapi_v1.ui.profile;
 
 import echomachine.com.flickrapi_v1.R;
 import android.os.Bundle;
+
+import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -24,8 +29,23 @@ public class LoginFragment extends Fragment {
     private TextView signUpTv;
     private ProgressBar progressBar;
     private FirebaseAuth auth;
+    private NavController navController;
 
     public LoginFragment() {
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                // Handle the back button event
+                navController.navigate(R.id.navigation_register);
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
     }
 
     @Override

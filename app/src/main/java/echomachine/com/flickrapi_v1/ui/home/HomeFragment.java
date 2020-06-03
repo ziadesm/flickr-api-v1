@@ -8,6 +8,8 @@ import echomachine.com.flickrapi_v1.receiver.network.ConnectivityReceiver;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -15,9 +17,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.activity.OnBackPressedCallback;
+import androidx.activity.OnBackPressedDispatcher;
+import androidx.activity.OnBackPressedDispatcherOwner;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -27,12 +33,14 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import echomachine.com.flickrapi_v1.R;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import static android.content.Context.SEARCH_SERVICE;
 
-public class HomeFragment extends Fragment implements ConnectivityReceiver.ConnectivityReceiverListener {
+public class HomeFragment extends Fragment
+        implements ConnectivityReceiver.ConnectivityReceiverListener {
 
     private static final String TAG = "ZiadHome";
     private HomeViewModel homeViewModel;
@@ -43,6 +51,7 @@ public class HomeFragment extends Fragment implements ConnectivityReceiver.Conne
     private SearchView.OnQueryTextListener listener;
     private NavController navController;
     BottomNavigationView navView;
+    boolean doubleBackToExitPressedOnce = false;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -95,6 +104,14 @@ public class HomeFragment extends Fragment implements ConnectivityReceiver.Conne
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         checkInternetConnection();
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                requireActivity().finish();
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(getActivity(), callback);
+
     }
 
     @Override

@@ -2,6 +2,8 @@ package echomachine.com.flickrapi_v1.ui.splash;
 
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -26,6 +28,11 @@ public class SplashFragment extends Fragment {
 
     public SplashFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 
     @Override
@@ -54,7 +61,7 @@ public class SplashFragment extends Fragment {
 
             @Override
             public void onFinish() {
-                navController.navigate(R.id.action_navigation_splash_to_navigation_home);
+                navController.navigate(R.id.navigation_home);
             }
         }.start();
 

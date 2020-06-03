@@ -22,6 +22,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
-        assertEquals("android.com.flickrapi_v1", appContext.getPackageName());
+        assertEquals("echomachine.com.flickrapi_v1", appContext.getPackageName());
     }
 }

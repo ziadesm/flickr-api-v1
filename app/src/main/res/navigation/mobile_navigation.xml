@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
@@ -14,11 +15,15 @@
             android:id="@+id/action_navigation_home_to_navigation_selected"
             app:destination="@id/navigation_selected"
             app:enterAnim="@anim/nav_default_enter_anim"
+            app:popUpTo="@id/navigation_home"
+            app:popUpToInclusive="true"
             app:exitAnim="@anim/nav_default_exit_anim" />
 
         <action
             android:id="@+id/action_navigation_home_to_navigation_liked"
             app:destination="@id/navigation_liked"
+            app:popUpTo="@id/navigation_home"
+            app:popUpToInclusive="true"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"/>
     </fragment>
@@ -27,7 +32,7 @@
         android:id="@+id/navigation_profile"
         android:name="echomachine.com.flickrapi_v1.ui.profile.ProfileFragment"
         android:label="@string/title_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile"/>
 
     <fragment
         android:id="@+id/navigation_notifications"
@@ -62,6 +67,8 @@
         tools:layout="@layout/fragment_selected">
         <action
             android:id="@+id/action_navigation_selected_to_navigation_home"
+            app:popUpTo="@id/navigation_home"
+            app:popUpToInclusive="true"
             app:destination="@id/navigation_home" />
     </fragment>
 
@@ -85,7 +92,7 @@
         <action
             android:id="@+id/action_navigation_splash_to_navigation_home"
             app:destination="@id/navigation_home"
-            app:popUpTo="@id/mobile_navigation"
+            app:popUpTo="@id/navigation_home"
             app:popUpToInclusive="true"
             app:enterAnim="@anim/fragment_close_enter"
             app:exitAnim="@anim/fragment_close_exit" />

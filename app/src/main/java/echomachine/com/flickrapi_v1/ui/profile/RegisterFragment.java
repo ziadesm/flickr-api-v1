@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
@@ -35,6 +37,20 @@ public class RegisterFragment extends Fragment {
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                // Handle the back button event
+                navController.navigate(R.id.navigation_home);
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_register, container, false);
@@ -45,7 +61,6 @@ public class RegisterFragment extends Fragment {
         mRegisterBtn = root.findViewById(R.id.btn_register);
         signInTv = root.findViewById(R.id.login_words);
         auth = FirebaseAuth.getInstance();
-        navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
 
         signInTv.setOnClickListener(v -> {
             navController.navigate(R.id.navigation_login);
@@ -85,11 +100,5 @@ public class RegisterFragment extends Fragment {
                 mRegisterBtn.setEnabled(true);
             }
         });
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        navController.navigate(R.id.navigation_home);
     }
 }
