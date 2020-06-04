@@ -14,8 +14,6 @@ import androidx.paging.PagedList;
 
 import retrofit2.Call;
 
-import static echomachine.com.flickrapi_v1.adapter.pagination.PhotoDataSource.FIRST_PAGE;
-
 public class HomeViewModel extends ViewModel {
     private static final String TAG = "ZiadHome";
     PhotoDataSourceFactory factory;
