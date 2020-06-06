@@ -45,7 +45,6 @@ public class HomeFragment extends Fragment
     private SearchView.OnQueryTextListener listener;
     private NavController navController;
     BottomNavigationView navView;
-    boolean doubleBackToExitPressedOnce = false;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
