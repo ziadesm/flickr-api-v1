@@ -22,6 +22,9 @@ public interface DaoPhoto {
     @Delete
     Completable deletePhoto(LikedPhoto likedPhoto);
 
+    @Delete
+    Completable deleteSomePhoto(List<LikedPhoto> photos);
+
     @Query("DELETE FROM liked_photo")
     Completable deleteAllPhoto();
 }

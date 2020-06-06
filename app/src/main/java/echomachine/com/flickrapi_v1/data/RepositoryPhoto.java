@@ -26,7 +26,11 @@ public class RepositoryPhoto {
     }
 
     public Completable deletePhoto(LikedPhoto likedPhoto) {
-        return daoPhoto.deletePhoto(likedPhoto).subscribeOn(Schedulers.io())
+        return daoPhoto.deletePhoto(likedPhoto).subscribeOn(Schedulers.io());
+    }
+
+    public Completable deleteSomePhoto(List<LikedPhoto> photo) {
+        return daoPhoto.deleteSomePhoto(photo).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
