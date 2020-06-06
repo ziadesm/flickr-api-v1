@@ -3,18 +3,17 @@ package echomachine.com.flickrapi_v1.adapter;
 import echomachine.com.flickrapi_v1.R;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
@@ -28,6 +27,7 @@ import echomachine.com.flickrapi_v1.interfaces.ReachTheEndFinally;
 
 public class LikedPhotoAdapter extends RecyclerView.Adapter<LikedPhotoAdapter.LikedViewModel> {
 
+    private static final String TAG = "ZiadLiked";
     private ReachTheEndFinally listener;
     private List<LikedPhoto> mList = new ArrayList<>();
     private List<LikedPhoto> deletedList = new ArrayList<>();
@@ -99,8 +99,7 @@ public class LikedPhotoAdapter extends RecyclerView.Adapter<LikedPhotoAdapter.Li
 
     public void onSwipeAction(int pos) {
         LikedPhoto photo = mList.get(pos);
-        repo.deletePhoto(photo);
-        mList.remove(pos);
+        repo.deletePhoto(photo).subscribe(() -> mList.remove(photo), e -> Log.d(TAG, e.getMessage()));
         notifyItemRemoved(pos);
     }
 

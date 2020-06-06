@@ -3,10 +3,6 @@ import android.app.Application;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.os.Build;
-import android.util.Log;
-import android.widget.Toast;
-
-import com.google.firebase.iid.FirebaseInstanceId;
 
 import echomachine.com.flickrapi_v1.receiver.network.ConnectivityReceiver;
 

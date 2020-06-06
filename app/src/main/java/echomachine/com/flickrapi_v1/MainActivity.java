@@ -7,10 +7,13 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+
+import echomachine.com.flickrapi_v1.setting.BottomNavigationBehavior;
 
 public class MainActivity extends AppCompatActivity{
     private static final String TAG = "ZiadActivity";
@@ -33,6 +36,9 @@ public class MainActivity extends AppCompatActivity{
                 .build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
+
+        CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) navView.getLayoutParams();
+        layoutParams.setBehavior(new BottomNavigationBehavior());
 
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
             switch (destination.getId()) {

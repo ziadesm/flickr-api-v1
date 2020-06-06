@@ -5,12 +5,9 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +19,6 @@ import echomachine.com.flickrapi_v1.R;
 import echomachine.com.flickrapi_v1.adapter.LikedPhotoAdapter;
 import echomachine.com.flickrapi_v1.adapter.SimpleRecyclerItemTouchHelper;
 import echomachine.com.flickrapi_v1.data.RepositoryPhoto;
-import echomachine.com.flickrapi_v1.interfaces.ReachTheEndFinally;
 import echomachine.com.flickrapi_v1.pojo.LikedPhoto;
 
 public class LikedFragment extends Fragment {
