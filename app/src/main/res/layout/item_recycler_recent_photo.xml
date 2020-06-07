@@ -9,12 +9,6 @@
     android:layout_margin="5dp"
     app:cardCornerRadius="3dp">
 
-    <CheckBox
-        android:id="@+id/item_check_box_recycler"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:checked="false"/>
         <FrameLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent">

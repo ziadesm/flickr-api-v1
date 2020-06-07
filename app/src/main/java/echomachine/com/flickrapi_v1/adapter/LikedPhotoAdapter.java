@@ -63,21 +63,10 @@ public class LikedPhotoAdapter extends RecyclerView.Adapter<LikedPhotoAdapter.Li
                 .fit()
                 .centerCrop()
                 .into(holder.imageView);
-        holder.checkBox.setVisibility(View.GONE);
 
-        holder.imageView.setOnLongClickListener(v -> {
-            deletedList.add(photo);
-            holder.checkBox.setVisibility(View.VISIBLE);
-            holder.checkBox.setChecked(true);
-            return true;
-        });
-
-        holder.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                deletedList.add(mList.get(position));
-            } else {
-                deletedList.remove(mList.get(position));
-            }
+        holder.imageView.setOnClickListener(v -> {
+            NavController navController = Navigation.findNavController(fragment.getActivity(), R.id.nav_host_fragment);
+            navController.navigate(R.id.navigation_selected);
         });
 
         if (position == mList.size()) {
@@ -106,16 +95,9 @@ public class LikedPhotoAdapter extends RecyclerView.Adapter<LikedPhotoAdapter.Li
     public class LikedViewModel extends RecyclerView.ViewHolder {
 
         private ImageView imageView;
-        private CheckBox checkBox;
         public LikedViewModel(@NonNull View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.image_header);
-            checkBox = itemView.findViewById(R.id.item_check_box_recycler);
-
-            itemView.setOnClickListener(v -> {
-                NavController navController = Navigation.findNavController(fragment.getActivity(), R.id.nav_host_fragment);
-                navController.navigate(R.id.navigation_selected);
-            });
         }
     }
 }

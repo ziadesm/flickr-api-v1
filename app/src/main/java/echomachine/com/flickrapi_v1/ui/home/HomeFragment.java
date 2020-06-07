@@ -136,7 +136,6 @@ public class HomeFragment extends Fragment
 
     private void showOfflineFragment() {
         navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
-        navController.popBackStack(R.id.navigation_home, true);
         navController.navigate(R.id.navigation_offline);
     }
 
@@ -150,6 +149,11 @@ public class HomeFragment extends Fragment
         getActivity().registerReceiver(receiver, intentFilter);
 
         MyApp.getINSTANCE().setConnectivityListener(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
     }
 
     @Override

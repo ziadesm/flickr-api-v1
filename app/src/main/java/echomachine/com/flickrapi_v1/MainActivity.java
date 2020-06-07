@@ -1,10 +1,12 @@
 package echomachine.com.flickrapi_v1;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
@@ -26,7 +28,6 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         navView = findViewById(R.id.nav_view);
-        Toolbar toolbar = findViewById(R.id.toolbar);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity{
                 .build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
+        NavigationUI.navigateUp(navController, appBarConfiguration);
 
         CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) navView.getLayoutParams();
         layoutParams.setBehavior(new BottomNavigationBehavior());
@@ -43,21 +45,24 @@ public class MainActivity extends AppCompatActivity{
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
             switch (destination.getId()) {
                 case R.id.navigation_login:
-                    hideBars();
-                    break;
                 case R.id.navigation_register:
-                    hideBars();
-                    break;
-                case R.id.navigation_offline:
-                    getSupportActionBar().hide();
-                    break;
                 case R.id.navigation_splash:
+                case R.id.navigation_offline:
                     hideBars();
+                    break;
+                case R.id.navigation_liked:
+                case R.id.navigation_selected:
+                    navView.setVisibility(View.GONE);
                     break;
                 default:
                     showBars();
             }
         });
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        return NavigationUI.navigateUp(navController,appBarConfiguration);
     }
 
     private void hideBars() {
@@ -68,10 +73,5 @@ public class MainActivity extends AppCompatActivity{
     private void showBars() {
         navView.setVisibility(View.VISIBLE);
         getSupportActionBar().show();
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
     }
 }

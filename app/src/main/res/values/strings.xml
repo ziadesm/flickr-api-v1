@@ -46,4 +46,5 @@
     <string name="offline_fragment">Offline</string>
     <string name="logo_splash_screen">FlickrAPI &amp; AppGarden</string>
     <string name="logo_splash_screen_powered">Powerded By</string>
+    <string name="offline_fragment_text">"You are Offline!! \nplease check your connetion and try again "</string>
 </resources>

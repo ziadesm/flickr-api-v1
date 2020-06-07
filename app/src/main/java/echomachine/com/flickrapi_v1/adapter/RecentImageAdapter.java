@@ -96,7 +96,7 @@ public class RecentImageAdapter extends PagedListAdapter<Photo, RecentImageAdapt
                                 //TODO Access database and moving to other fragment (Create new fragment and viewModel)
                                 NavController navController = Navigation.
                                         findNavController(fragment.getActivity(), R.id.nav_host_fragment);
-                                navController.navigate(R.id.navigation_liked);
+                                navController.navigate(R.id.action_navigation_home_to_navigation_liked);
                             });
                     snackbar.show();
                 }
@@ -106,7 +106,7 @@ public class RecentImageAdapter extends PagedListAdapter<Photo, RecentImageAdapt
                 public void onSingleClick(View v) {
                     //TODO Move to PhotoFragment (onGoing) to download and show other similar photo
                     NavController navController = Navigation.findNavController(fragment.getActivity(), R.id.nav_host_fragment);
-                    navController.navigate(R.id.navigation_selected);
+                    navController.navigate(R.id.action_navigation_home_to_navigation_selected);
                 }
             });
         }
