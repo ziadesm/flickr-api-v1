@@ -2,12 +2,12 @@ package echomachine.com.flickrapi_v1.adapter;
 
 import echomachine.com.flickrapi_v1.R;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
@@ -30,14 +30,11 @@ public class LikedPhotoAdapter extends RecyclerView.Adapter<LikedPhotoAdapter.Li
     private static final String TAG = "ZiadLiked";
     private ReachTheEndFinally listener;
     private List<LikedPhoto> mList = new ArrayList<>();
-    private List<LikedPhoto> deletedList = new ArrayList<>();
     private Fragment fragment;
     private RepositoryPhoto repo;
-    private Context context;
 
     public LikedPhotoAdapter(Context context, Fragment fragment) {
         this.fragment = fragment;
-        this.context = context;
         repo = new RepositoryPhoto(context);
     }
 
@@ -47,7 +44,7 @@ public class LikedPhotoAdapter extends RecyclerView.Adapter<LikedPhotoAdapter.Li
         return new LikedViewModel(LayoutInflater
                 .from(parent.getContext())
                 .inflate(R.layout.item_recycler_recent_photo
-                , parent, false));
+                        , parent, false));
     }
 
     public void setReachFinallyListener(ReachTheEndFinally listener) {
@@ -86,6 +83,7 @@ public class LikedPhotoAdapter extends RecyclerView.Adapter<LikedPhotoAdapter.Li
         notifyDataSetChanged();
     }
 
+    @SuppressLint("CheckResult")
     public void onSwipeAction(int pos) {
         LikedPhoto photo = mList.get(pos);
         repo.deletePhoto(photo).subscribe(() -> mList.remove(photo), e -> Log.d(TAG, e.getMessage()));
@@ -95,7 +93,7 @@ public class LikedPhotoAdapter extends RecyclerView.Adapter<LikedPhotoAdapter.Li
     public class LikedViewModel extends RecyclerView.ViewHolder {
 
         private ImageView imageView;
-        public LikedViewModel(@NonNull View itemView) {
+        private LikedViewModel(@NonNull View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.image_header);
         }

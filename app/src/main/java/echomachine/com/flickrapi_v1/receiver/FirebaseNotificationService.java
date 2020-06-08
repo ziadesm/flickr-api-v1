@@ -1,6 +1,6 @@
 package echomachine.com.flickrapi_v1.receiver;
-
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -8,6 +8,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessagingService;
@@ -15,36 +16,43 @@ import com.google.firebase.messaging.RemoteMessage;
 
 import java.util.Map;
 
-import echomachine.com.flickrapi_v1.MyApp;
 import echomachine.com.flickrapi_v1.R;
 
 public class FirebaseNotificationService extends FirebaseMessagingService {
     private static final String TAG = "ZiadNotify";
     private static final String FIREBASE_TOKEN = "firebase_token";
+    private static final String CHANNEL_ID_1 = "Photo Channel";
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
-        if (remoteMessage.getData() != null) {
-            Map<String, String> data = remoteMessage.getData();
-            String title = data.get("title");
-            String content = data.get("content");
+        NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        Notification builder;
+        if (remoteMessage.getNotification() != null) {
+            String title = remoteMessage.getNotification().getTitle();
+            String content = remoteMessage.getNotification().getBody();
 
-            NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                MyApp.getINSTANCE().createNotificationChannel();
+                NotificationChannel channel1 = new NotificationChannel(CHANNEL_ID_1
+                        , "Photo of the day"
+                        , NotificationManager.IMPORTANCE_HIGH);
+                channel1.setDescription("High Priority Notification");
+                channel1.enableLights(true);
+                channel1.enableVibration(true);
+
+                manager.createNotificationChannel(channel1);
             }
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(this, MyApp.CHANNEL_ID_1);
-            builder.setAutoCancel(true)
-                    .setDefaults(Notification.DEFAULT_ALL)
-                    .setContentText(remoteMessage.getNotification().getBody())
-                    .setBadgeIconType(NotificationCompat.BADGE_ICON_SMALL)
+
+            builder = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID_1)
+                    .setSmallIcon(R.drawable.ic_place_holder_home)
                     .setWhen(System.currentTimeMillis())
-                    .setSmallIcon(R.mipmap.ic_icon_app_launcher_round)
-                    .setTicker("WWGallery");
-
-            manager.notify(1, builder.build());
-
+                    .setContentText(content)
+                    .setContentTitle(title)
+                    .setPriority(NotificationCompat.PRIORITY_HIGH)
+                    .setTicker("WWGallery")
+                    .setAutoCancel(true)
+                    .build();
+            manager.notify(101, builder);
         }
     }
 
