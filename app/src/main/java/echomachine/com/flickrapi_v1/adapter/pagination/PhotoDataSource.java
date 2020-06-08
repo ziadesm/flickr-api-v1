@@ -31,7 +31,9 @@ public class PhotoDataSource extends PageKeyedDataSource<Integer, _PhotoModel.Ph
                 call = PhotoClient.getINSTANCE().getRecentPhotoPage(FIRST_PAGE);
             } else {
                 call = PhotoClient.getINSTANCE().getPhotoSearchPage(text, FIRST_PAGE);
+                Log.d(TAG, "" + text);
             }
+
             call
                 .enqueue(new Callback<_PhotoModel>() {
             @Override

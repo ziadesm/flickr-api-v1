@@ -5,6 +5,8 @@ import echomachine.com.flickrapi_v1.MyApp;
 import echomachine.com.flickrapi_v1.adapter.RecentImageAdapter;
 import echomachine.com.flickrapi_v1.receiver.network.ConnectivityReceiver;
 
+import android.content.Context;
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
@@ -27,6 +29,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import echomachine.com.flickrapi_v1.R;
+
+import android.view.inputmethod.InputMethodManager;
 import android.widget.SearchView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -114,6 +118,10 @@ public class HomeFragment extends Fragment
                     }
                     homeViewModel.mutableDataSearch
                             .observe(getActivity(), photos -> aAdapter.submitList(photos));
+                    InputMethodManager inputManager = (InputMethodManager) getContext()
+                            .getSystemService(Context.INPUT_METHOD_SERVICE);
+                    inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken()
+                            ,InputMethodManager.HIDE_NOT_ALWAYS);
                     return true;
                 }
 

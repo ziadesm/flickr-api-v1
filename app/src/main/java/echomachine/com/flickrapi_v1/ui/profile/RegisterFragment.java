@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,6 +29,8 @@ public class RegisterFragment extends Fragment {
     private Button mRegisterBtn;
     private FirebaseAuth auth;
     private NavController navController;
+    private ProgressBar progressBar;
+    Handler handler;
 
     public RegisterFragment() {
     }
@@ -34,6 +38,7 @@ public class RegisterFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        handler = new Handler();
         navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
         OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
             @Override
@@ -55,16 +60,28 @@ public class RegisterFragment extends Fragment {
         phoneEt = root.findViewById(R.id.et_phone_number);
         mRegisterBtn = root.findViewById(R.id.btn_register);
         signInTv = root.findViewById(R.id.login_words);
+        progressBar = root.findViewById(R.id.register_progress_bar);
         auth = FirebaseAuth.getInstance();
 
         signInTv.setOnClickListener(v -> {
             navController.navigate(R.id.navigation_login);
         });
-        mRegisterBtn.setOnClickListener(v -> newRegisterUser());
+        mRegisterBtn.setOnClickListener(v -> {
+            progressBar.setVisibility(View.VISIBLE);
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mRegisterBtn.setEnabled(false);
+                    progressBar.setProgress(60);
+                }
+            }, 700);
+            newRegisterUser();
+        });
         return root;
     }
 
     private void newRegisterUser() {
+
         String email = emailEt.getText().toString().trim();
         String phone = phoneEt.getText().toString().trim();
         String password = passwordEt.getText().toString().trim();
@@ -87,13 +104,17 @@ public class RegisterFragment extends Fragment {
             return;
         }
 
-        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
+
+        handler.postDelayed(() -> auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
+                progressBar.setProgress(80);
                 navController.navigate(R.id.navigation_profile);
             } else {
                 Log.d(TAG, "newRegisterUser: "+ task.getException().getMessage());
+                progressBar.setVisibility(View.INVISIBLE);
                 mRegisterBtn.setEnabled(true);
             }
-        });
+        }), 1000);
+
     }
 }

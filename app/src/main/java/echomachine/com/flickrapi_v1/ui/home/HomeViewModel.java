@@ -23,12 +23,11 @@ public class HomeViewModel extends ViewModel {
 
     public HomeViewModel() {
         factory = new PhotoDataSourceFactory(null);
-        Log.d(TAG, "HomeViewModel: " + 2);
         dataSourceMutableLiveData = factory.getLiveData();
 
         PagedList.Config config = new PagedList.Config.Builder()
+                .setPageSize(11)
                 .setEnablePlaceholders(false)
-                .setPageSize(100)
                 .build();
 
         mutableData = (new LivePagedListBuilder<Integer, _PhotoModel.Photos.Photo>(factory, config)).build();
@@ -36,13 +35,14 @@ public class HomeViewModel extends ViewModel {
 
     public HomeViewModel(String text) {
         factory = new PhotoDataSourceFactory(text);
-        Log.d(TAG, "HomeViewModel: " + text + 2);
         dataSourceMutableLiveData = factory.getLiveData();
 
         PagedList.Config config = new PagedList.Config.Builder()
+                .setPageSize(11)
                 .setEnablePlaceholders(false)
-                .setPageSize(100)
                 .build();
+
+        Log.d(TAG, "" + config.pageSize);
 
         mutableDataSearch = (new LivePagedListBuilder<Integer, _PhotoModel.Photos.Photo>(factory, config)).build();
     }
