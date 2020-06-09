@@ -51,6 +51,7 @@
                 android:backgroundTint="#FFFFFF"
                 app:rippleColor="@android:color/white"
                 app:fabSize="normal"
+                app:pressedTranslationZ="12dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/selected_image_header" />
 
@@ -65,6 +66,7 @@
                 app:rippleColor="@android:color/white"
                 app:fabSize="mini"
                 android:visibility="invisible"
+                app:pressedTranslationZ="12dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/selected_floating_action_btn"
                 app:layout_constraintHorizontal_bias="0.883"
@@ -84,6 +86,7 @@
                 android:src="@drawable/ic_selected_share"
                 android:tint="#E6165D"
                 android:backgroundTint="#8C9A99"
+                app:pressedTranslationZ="12dp"
                 android:visibility="invisible"
                 app:rippleColor="@android:color/white"
                 app:fabSize="mini"/>
@@ -99,6 +102,7 @@
                 app:rippleColor="@android:color/tab_indicator_text"
                 app:fabSize="mini"
                 android:visibility="invisible"
+                app:pressedTranslationZ="12dp"
                 app:layout_constraintBottom_toTopOf="@+id/selected_download_floating_action_btn"
                 app:layout_constraintEnd_toStartOf="@+id/selected_floating_action_btn"
                 app:layout_constraintHorizontal_bias="0.883"

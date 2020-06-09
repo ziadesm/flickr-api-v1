@@ -2,25 +2,23 @@ package echomachine.com.flickrapi_v1.ui.selected;
 import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
-import androidx.activity.OnBackPressedDispatcher;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import echomachine.com.flickrapi_v1.R;
-import echomachine.com.flickrapi_v1.receiver.network.ConnectivityReceiver;
 
 public class SelectedFragment extends Fragment {
 
@@ -28,9 +26,12 @@ public class SelectedFragment extends Fragment {
     private SelectedViewModel viewModel;
     private NavController navController;
     private FloatingActionButton mChooseFab, mDownloadFab, mShareFab, mWallpaperFab;
+    private Animation aOpenFabs, aCloseFabs, aOpenRotate, aCloseRotate;
     private ImageView mImageViewer;
     private RecyclerView mRecycler;
     private TextView mTagsTextView;
+    private boolean isOpen = false;
+
 
     public SelectedFragment() {
     }
@@ -64,9 +65,41 @@ public class SelectedFragment extends Fragment {
         mRecycler = view.findViewById(R.id.selected_recycler_view);
         mTagsTextView = view.findViewById(R.id.selected_tags_appear);
 
+        // Animation initialised here
+        aOpenFabs = AnimationUtils.loadAnimation(getContext(), R.anim.anim_fab_opens);
+        aCloseFabs = AnimationUtils.loadAnimation(getContext(), R.anim.anim_fab_closes);
+        aOpenRotate = AnimationUtils.loadAnimation(getContext(), R.anim.anim_rotate_open_main_fab);
+        aCloseRotate = AnimationUtils.loadAnimation(getContext(), R.anim.anim_rotate_close_main_fab);
+
         viewModel = ViewModelProviders
                 .of(this).get(SelectedViewModel.class);
 
+        mChooseFab.setOnClickListener(v -> {
+          if (isOpen) {
+              closeFabToCloseFabs();
+              isOpen = false;
+          } else {
+              openFabToOpenFabs();
+              isOpen = true;
+          }
+        });
+
         return view;
+    }
+
+    private void openFabToOpenFabs() {
+        mChooseFab.startAnimation(aOpenRotate);
+
+        mShareFab.startAnimation(aOpenFabs);
+        mWallpaperFab.startAnimation(aOpenFabs);
+        mDownloadFab.startAnimation(aOpenFabs);
+    }
+
+    private void closeFabToCloseFabs() {
+        mChooseFab.startAnimation(aCloseRotate);
+
+        mShareFab.startAnimation(aCloseFabs);
+        mWallpaperFab.startAnimation(aCloseFabs);
+        mDownloadFab.startAnimation(aCloseFabs);
     }
 }
