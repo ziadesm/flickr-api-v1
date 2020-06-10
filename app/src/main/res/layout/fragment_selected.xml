@@ -22,23 +22,12 @@
             <ImageView
                 android:id="@+id/selected_image_header"
                 android:layout_width="match_parent"
-                android:layout_height="205dp"
+                android:layout_height="350dp"
+                android:contentDescription="@string/image_description"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:contentDescription="@string/image_description" />
-
-            <TextView
-                android:id="@+id/selected_tags_appear"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="@string/selected_username_apear"
-                app:layout_constraintEnd_toStartOf="@+id/selected_floating_action_btn"
-                app:layout_constraintHorizontal_bias="0.059"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/selected_image_header" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/selected_floating_action_btn"
@@ -60,19 +49,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
+                android:backgroundTint="#D1CED6"
                 android:src="@drawable/ic_selected_download"
                 android:tint="@color/notify_color_high"
-                android:backgroundTint="#D1CED6"
-                app:rippleColor="@android:color/white"
-                app:fabSize="mini"
                 android:visibility="invisible"
-                app:pressedTranslationZ="12dp"
+                app:fabSize="mini"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/selected_floating_action_btn"
                 app:layout_constraintHorizontal_bias="0.883"
-                app:layout_constraintStart_toEndOf="@+id/selected_tags_appear"
+                app:layout_constraintStart_toStartOf="@+id/selected_set_as_wallpaper_floating_action_btn"
                 app:layout_constraintTop_toBottomOf="@+id/selected_floating_action_btn"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintVertical_bias="0.0"
+                app:pressedTranslationZ="12dp"
+                app:rippleColor="@android:color/white" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/selected_share_floating_action_btn"
@@ -106,7 +95,6 @@
                 app:layout_constraintBottom_toTopOf="@+id/selected_download_floating_action_btn"
                 app:layout_constraintEnd_toStartOf="@+id/selected_floating_action_btn"
                 app:layout_constraintHorizontal_bias="0.883"
-                app:layout_constraintStart_toEndOf="@+id/selected_tags_appear"
                 app:layout_constraintTop_toTopOf="@+id/selected_floating_action_btn"
                 app:layout_constraintVertical_bias="1.0" />
         </androidx.constraintlayout.widget.ConstraintLayout>

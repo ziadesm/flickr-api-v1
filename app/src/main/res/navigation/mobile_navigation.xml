@@ -73,6 +73,10 @@
             app:destination="@id/navigation_home"
             app:popUpTo="@id/navigation_home"
             app:popUpToInclusive="true" />
+        <argument
+            android:name="photoUrl"
+            app:argType="string"
+            android:defaultValue="default" />
     </fragment>
 
     <fragment
@@ -89,6 +93,14 @@
             app:popExitAnim="@anim/nav_default_exit_anim"
             app:popUpTo="@id/navigation_home"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_navigation_liked_to_navigation_selected"
+            app:destination="@id/navigation_selected"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@id/navigation_selected" />
     </fragment>
 
     <fragment

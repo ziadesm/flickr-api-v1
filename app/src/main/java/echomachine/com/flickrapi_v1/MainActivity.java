@@ -48,10 +48,10 @@ public class MainActivity extends AppCompatActivity{
                 case R.id.navigation_register:
                 case R.id.navigation_splash:
                 case R.id.navigation_offline:
+                case R.id.navigation_selected:
                     hideBars();
                     break;
                 case R.id.navigation_liked:
-                case R.id.navigation_selected:
                     navView.setVisibility(View.GONE);
                     break;
                 default:

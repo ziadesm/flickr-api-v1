@@ -2,12 +2,15 @@ package echomachine.com.flickrapi_v1.ui.selected;
 import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.squareup.picasso.Picasso;
 
 import echomachine.com.flickrapi_v1.R;
 
@@ -29,8 +33,7 @@ public class SelectedFragment extends Fragment {
     private Animation aOpenFabs, aCloseFabs, aOpenRotate, aCloseRotate;
     private ImageView mImageViewer;
     private RecyclerView mRecycler;
-    private TextView mTagsTextView;
-    private boolean isOpen = false;
+    private boolean isOpen;
 
 
     public SelectedFragment() {
@@ -63,7 +66,6 @@ public class SelectedFragment extends Fragment {
         mWallpaperFab = view.findViewById(R.id.selected_set_as_wallpaper_floating_action_btn);
         mImageViewer = view.findViewById(R.id.selected_image_header);
         mRecycler = view.findViewById(R.id.selected_recycler_view);
-        mTagsTextView = view.findViewById(R.id.selected_tags_appear);
 
         // Animation initialised here
         aOpenFabs = AnimationUtils.loadAnimation(getContext(), R.anim.anim_fab_opens);
@@ -75,16 +77,30 @@ public class SelectedFragment extends Fragment {
                 .of(this).get(SelectedViewModel.class);
 
         mChooseFab.setOnClickListener(v -> {
-          if (isOpen) {
-              closeFabToCloseFabs();
-              isOpen = false;
-          } else {
-              openFabToOpenFabs();
-              isOpen = true;
-          }
+              if (isOpen) {
+                  closeFabToCloseFabs();
+                  isOpen = false;
+              } else {
+                  openFabToOpenFabs();
+                  isOpen = true;
+              }
         });
 
         return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        if (getArguments() != null) {
+            SelectedFragmentArgs args = SelectedFragmentArgs.fromBundle(getArguments());
+            String url = args.getPhotoUrl();
+            Picasso.get()
+                    .load(url)
+                    .placeholder(R.drawable.ic_place_holder_home)
+                    .into(mImageViewer);
+            Log.d(TAG, "" + url);
+        }
     }
 
     private void openFabToOpenFabs() {

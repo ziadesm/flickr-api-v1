@@ -24,6 +24,7 @@ import echomachine.com.flickrapi_v1.data.RepositoryPhoto;
 import echomachine.com.flickrapi_v1.interfaces.inner.OnDoubleClickListener;
 import echomachine.com.flickrapi_v1.pojo.LikedPhoto;
 import echomachine.com.flickrapi_v1.pojo._PhotoModel.Photos.Photo;
+import echomachine.com.flickrapi_v1.ui.home.HomeFragmentDirections;
 
 public class RecentImageAdapter extends PagedListAdapter<Photo, RecentImageAdapter.ImageViewHolder> {
     private Context context;
@@ -52,7 +53,7 @@ public class RecentImageAdapter extends PagedListAdapter<Photo, RecentImageAdapt
                     .load(item.getUrl_s())
                     .placeholder(R.drawable.ic_place_holder_home)
                     .fit()
-                    .centerCrop()
+                    .centerCrop(1)
                     .into(holder.imageView);
         }
     }
@@ -106,7 +107,10 @@ public class RecentImageAdapter extends PagedListAdapter<Photo, RecentImageAdapt
                 public void onSingleClick(View v) {
                     //TODO Move to PhotoFragment (onGoing) to download and show other similar photo
                     NavController navController = Navigation.findNavController(fragment.getActivity(), R.id.nav_host_fragment);
-                    navController.navigate(R.id.action_navigation_home_to_navigation_selected);
+                    HomeFragmentDirections.ActionNavigationHomeToNavigationSelected action =
+                            HomeFragmentDirections.actionNavigationHomeToNavigationSelected();
+                    action.setPhotoUrl(getItem(getLayoutPosition()).getUrl_s());
+                    navController.navigate(action);
                 }
             });
         }
