@@ -1,5 +1,4 @@
 package echomachine.com.flickrapi_v1.adapter;
-
 import android.annotation.SuppressLint;
 import echomachine.com.flickrapi_v1.R;
 import android.content.Context;

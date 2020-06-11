@@ -49,6 +49,7 @@ public class HomeFragment extends Fragment
     private SearchView.OnQueryTextListener listener;
     private NavController navController;
     BottomNavigationView navView;
+    ConnectivityReceiver receiver;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -153,7 +154,7 @@ public class HomeFragment extends Fragment
         final IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
 
-        ConnectivityReceiver receiver = new ConnectivityReceiver();
+        receiver = new ConnectivityReceiver();
         getActivity().registerReceiver(receiver, intentFilter);
 
         MyApp.getINSTANCE().setConnectivityListener(this);
@@ -162,6 +163,9 @@ public class HomeFragment extends Fragment
     @Override
     public void onStop() {
         super.onStop();
+        getActivity().unregisterReceiver(receiver);
+
+        MyApp.getINSTANCE().setConnectivityListener(this);
     }
 
     @Override

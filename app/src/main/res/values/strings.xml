@@ -48,4 +48,5 @@
     <string name="logo_splash_screen_powered">Powerded By</string>
     <string name="offline_fragment_text">"You are Offline!! \nplease check your connetion and try again "</string>
     <string name="selected_username_apear">Username</string>
+    <string name="send_to">Send to..</string>
 </resources>
