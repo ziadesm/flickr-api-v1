@@ -1,10 +1,12 @@
 package echomachine.com.flickrapi_v1.ui.selected;
 import android.Manifest;
 import android.app.DownloadManager;
+import android.app.WallpaperManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
@@ -13,8 +15,6 @@ import android.os.Bundle;
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.ShareCompat;
-import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
@@ -22,8 +22,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Environment;
-import android.os.Handler;
-import android.provider.MediaStore;
+import android.os.StrictMode;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,6 +37,7 @@ import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -62,6 +62,8 @@ public class SelectedFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
         navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
         OnBackPressedCallback callback = new OnBackPressedCallback(true/* enabled by default */) {
             @Override
@@ -109,11 +111,7 @@ public class SelectedFragment extends Fragment {
         mShareFab.setOnClickListener(v -> {
             if (getArguments() != null) {
                 SelectedFragmentArgs args = SelectedFragmentArgs.fromBundle(getArguments());
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    shareItemApi24(args.getPhotoUrl());
-                } else {
-                    shareItem(args.getPhotoUrl());
-                }
+                shareItem(args.getPhotoUrl());
             }
         });
 
@@ -126,7 +124,23 @@ public class SelectedFragment extends Fragment {
             }
         });
 
-        mWallpaperFab.setOnClickListener(v -> {});
+        mWallpaperFab.setOnClickListener(v -> {
+            WallpaperManager manager = WallpaperManager.getInstance(getContext());
+
+            try {
+                File file =  new File(getContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+                        , "ww_gallery" + System.currentTimeMillis() + ".png");
+                FileOutputStream out = new FileOutputStream(file);
+                Bitmap bitmap = ((BitmapDrawable)mImageViewer.getDrawable())
+                        .getBitmap();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+                out.flush();
+                out.close();
+                manager.setBitmap(bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
 
         return view;
     }
@@ -199,48 +213,17 @@ public class SelectedFragment extends Fragment {
         });
     }
 
-    public void shareItemApi24(String url) {
-        Picasso.get().load(url).into(new Target() {
-            @Override public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                Intent i = new Intent(Intent.ACTION_SEND);
-                i.setType("image/*");
-                i.putExtra(Intent.EXTRA_STREAM, getLocalBitmapUriApi24(bitmap));
-                startActivity(Intent.createChooser(i, "Share Image"));
-            }
-
-            @Override
-            public void onBitmapFailed(Exception e, Drawable errorDrawable) { }
-            @Override public void onPrepareLoad(Drawable placeHolderDrawable) { }
-        });
-    }
-
     public Uri getLocalBitmapUri(Bitmap bmp) {
         Uri bmpUri = null;
         try {
             File file =  new File(getContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-                    , "share_image_" + System.currentTimeMillis() + ".jpg");
+                    , "ww_gallery" + System.currentTimeMillis() + ".png");
 
             FileOutputStream out = new FileOutputStream(file);
-            bmp.compress(Bitmap.CompressFormat.PNG, 90, out);
+            bmp.compress(Bitmap.CompressFormat.PNG, 100, out);
             out.close();
             bmpUri = Uri.fromFile(file);
         } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return bmpUri;
-    }
-
-    public Uri getLocalBitmapUriApi24(Bitmap bmp) {
-        Uri bmpUri = null;
-        try {
-            File file =  new File(getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-                    , "share_image_" + System.currentTimeMillis() + ".jpg");
-            FileOutputStream out = new FileOutputStream(file);
-            bmp.compress(Bitmap.CompressFormat.JPEG, 90, out);
-            out.close();
-            bmpUri = FileProvider.getUriForFile(getContext(), "echomachine.com.flickrapi_v1.fileprovider", file);
-        return bmpUri;
-        } catch (Exception e) {
             e.printStackTrace();
         }
         return bmpUri;

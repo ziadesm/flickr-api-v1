@@ -40,16 +40,5 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="echomachine.com.flickrapi_v1.fileprovider"
-            android:exported="false"
-            android:enabled="true"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/shared_paths"/>
-        </provider>
     </application>
 </manifest>
