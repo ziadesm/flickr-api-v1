@@ -26,7 +26,8 @@ public class HomeViewModel extends ViewModel {
         dataSourceMutableLiveData = factory.getLiveData();
 
         PagedList.Config config = new PagedList.Config.Builder()
-                .setPageSize(11)
+                .setInitialLoadSizeHint(32)
+                .setPageSize(32)
                 .setEnablePlaceholders(false)
                 .build();
 
@@ -38,7 +39,8 @@ public class HomeViewModel extends ViewModel {
         dataSourceMutableLiveData = factory.getLiveData();
 
         PagedList.Config config = new PagedList.Config.Builder()
-                .setPageSize(11)
+                .setInitialLoadSizeHint(32)
+                .setPageSize(32)
                 .setEnablePlaceholders(false)
                 .build();
 
@@ -53,13 +55,5 @@ public class HomeViewModel extends ViewModel {
 
     public LiveData<PagedList<_PhotoModel.Photos.Photo>> getMutableDataSearch() {
         return mutableDataSearch;
-    }
-
-    public Call<_PhotoModel> getRecentPhotoPage(int page) {
-        return PhotoClient.getINSTANCE().getRecentPhotoPage(page);
-    }
-
-    public Call<_PhotoModel> getPhotoSearchPage(String text, int page) {
-        return PhotoClient.getINSTANCE().getPhotoSearchPage(text, page);
     }
 }

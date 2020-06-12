@@ -62,8 +62,10 @@ public class SelectedFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //Use to share images with other apps without restriction >= API 24
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
+
         navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
         OnBackPressedCallback callback = new OnBackPressedCallback(true/* enabled by default */) {
             @Override
@@ -97,6 +99,8 @@ public class SelectedFragment extends Fragment {
 
         viewModel = ViewModelProviders
                 .of(this).get(SelectedViewModel.class);
+
+
 
         mChooseFab.setOnClickListener(v -> {
               if (isOpen) {

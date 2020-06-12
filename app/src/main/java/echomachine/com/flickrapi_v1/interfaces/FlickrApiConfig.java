@@ -32,7 +32,6 @@ public interface FlickrApiConfig {
             ,@Query("api_key") String api_key
             ,@Query("user_id") String user_id
             ,@Query("extras") String extras
-            ,@Query("page") int page
             ,@Query("format") String format
             ,@Query("nojsoncallback") int nojsoncallback);
 }

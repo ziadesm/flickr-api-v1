@@ -42,8 +42,8 @@ public class PhotoClient {
                 , API_KEY, text, URL_S, page, JSON_FORMAT, NOJSON_CALLBACK);
     }
 
-    public Call<_PhotoModel> getProfilePhotosPage(String user_id, int page) {
+    public Call<_PhotoModel> getProfilePhotosPage(String user_id) {
         return apiConfig.getProfilePhotosPage("flickr.people.getPhotos"
-                , API_KEY, user_id, URL_S, page, JSON_FORMAT, NOJSON_CALLBACK);
+                , API_KEY, user_id, URL_S, JSON_FORMAT, NOJSON_CALLBACK);
     }
 }

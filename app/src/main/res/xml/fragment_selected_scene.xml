@@ -1,31 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <ConstraintSet android:id="@+id/start">
-        <Constraint android:id="@+id/selected_image_header" />
-        <Constraint
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_width="0dp"
-            android:id="@+id/selected_linear_view"
-            app:layout_constraintTop_toBottomOf="parent"
-            app:layout_editor_absoluteY="660dp" />
-        <Constraint
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_width="0dp"
-            android:layout_height="186dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:id="@+id/selected_linear_view" />
-    </ConstraintSet>
-
-    <ConstraintSet android:id="@+id/end">
-        <Constraint android:id="@id/selected_image_header" />
-    </ConstraintSet>
-
     <Transition
-        app:constraintSetEnd="@id/end"
-        app:constraintSetStart="@+id/start" />
+        app:constraintSetEnd="@layout/fragment_selected_scene_end"
+        app:constraintSetStart="@layout/fragment_selected_scene_start" >
+        <OnSwipe app:dragDirection="dragUp"
+            app:touchAnchorSide="top"/>
+    </Transition>
 </MotionScene>
