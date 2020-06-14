@@ -1,6 +1,7 @@
 package echomachine.com.flickrapi_v1.interfaces;
 import echomachine.com.flickrapi_v1.pojo._PhotoModel;
 
+import io.reactivex.Single;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
@@ -8,7 +9,7 @@ import retrofit2.http.Query;
 public interface FlickrApiConfig {
 
     @GET("rest/")
-    Call<_PhotoModel> getRecentPhotoPage(
+    Single<_PhotoModel> getRecentPhotoPage(
             @Query("method") String method
             ,@Query("api_key") String api_key
             ,@Query("extras") String extras
@@ -17,7 +18,7 @@ public interface FlickrApiConfig {
             ,@Query("nojsoncallback") int nojsoncallback);
 
     @GET("rest/")
-    Call<_PhotoModel> getPhotoSearchPage(
+    Single<_PhotoModel> getPhotoSearchPage(
             @Query("method") String method
             ,@Query("api_key") String api_key
             ,@Query("text") String text

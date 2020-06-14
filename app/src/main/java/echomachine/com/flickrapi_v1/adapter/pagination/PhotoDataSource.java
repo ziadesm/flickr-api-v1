@@ -9,6 +9,11 @@ import androidx.paging.PageKeyedDataSource;
 
 import java.util.List;
 
+import io.reactivex.Single;
+import io.reactivex.SingleObserver;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -16,7 +21,7 @@ import retrofit2.Response;
 public class PhotoDataSource extends PageKeyedDataSource<Integer, _PhotoModel.Photos.Photo> {
     private static final String TAG = "ZiadPhoto";
     public static final int FIRST_PAGE = 1;
-    Call<_PhotoModel> call;
+    Single<_PhotoModel> call;
     String text;
 
     public PhotoDataSource(String text) {
@@ -34,19 +39,25 @@ public class PhotoDataSource extends PageKeyedDataSource<Integer, _PhotoModel.Ph
                 Log.d(TAG, "" + text);
             }
 
-            call
-                .enqueue(new Callback<_PhotoModel>() {
-            @Override
-            public void onResponse(Call<_PhotoModel> call, Response<_PhotoModel> response) {
-                List<_PhotoModel.Photos.Photo> photo = response.body().getPhotos().getPhoto();
-                callback.onResult(photo, null, FIRST_PAGE + 1);
-            }
+            call.subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new SingleObserver<_PhotoModel>() {
+                        @Override
+                        public void onSubscribe(Disposable d) {
 
-            @Override
-            public void onFailure(Call<_PhotoModel> call, Throwable t) {
+                        }
 
-            }
-        });
+                        @Override
+                        public void onSuccess(_PhotoModel photoModel) {
+                            List<_PhotoModel.Photos.Photo> photo = photoModel.getPhotos().getPhoto();
+                            callback.onResult(photo, null, FIRST_PAGE + 1);
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+
+                        }
+                    });
     }
 
     @Override
@@ -57,21 +68,27 @@ public class PhotoDataSource extends PageKeyedDataSource<Integer, _PhotoModel.Ph
             } else {
                 call = PhotoClient.getINSTANCE().getPhotoSearchPage(text, params.key);
             }
-            call
-                .enqueue(new Callback<_PhotoModel>() {
-            @Override
-            public void onResponse(Call<_PhotoModel> call, Response<_PhotoModel> response) {
-                List<_PhotoModel.Photos.Photo> photo = response.body().getPhotos().getPhoto();
-                Log.d(TAG, "onResponse Params Key: " + params.key);
-                Log.d(TAG, "onResponse Photo Size: " + photo.size());
-                callback.onResult(photo, params.key + 1);
-            }
+            call.subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new SingleObserver<_PhotoModel>() {
+                        @Override
+                        public void onSubscribe(Disposable d) {
 
-            @Override
-            public void onFailure(Call<_PhotoModel> call, Throwable t) {
+                        }
 
-            }
-        });
+                        @Override
+                        public void onSuccess(_PhotoModel photoModel) {
+                             List<_PhotoModel.Photos.Photo> photo = photoModel.getPhotos().getPhoto();
+                             Log.d(TAG, "onResponse Params Key: " + params.key);
+                             Log.d(TAG, "onResponse Photo Size: " + photo.size());
+                             callback.onResult(photo, params.key + 1);
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+
+                        }
+                    });
     }
 
     @Override
