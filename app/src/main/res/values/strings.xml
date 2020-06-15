@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">FlickrAPI-v1</string>
+    <string name="app_name">WWGallery</string>
     <string name="title_home">Home</string>
     <string name="title_profile">Profile</string>
     <string name="title_notifications">Notifications</string>
@@ -8,6 +8,45 @@
     <string name="network_available">Back Online</string>
     <string name="network_available_message">You become online again</string>
     <string name="network_not_available">You\'re Offline</string>
-    <string name="network_not_available_message">Switch your celler data or WiFi to Reconnect, then RETRY</string>
+    <string name="network_not_available_message">Switch your cellar-data or WiFi to Reconnect, then RETRY</string>
     <string name="network_not_available_retry">"Retry "</string>
+    <string name="no_image_found">There\'s no image in here</string>
+    <string name="search_title">Search</string>
+    <string name="search_hint">Search for anything !</string>
+
+    <string name="login">Login</string>
+    <string name="password">Password</string>
+    <string name="e_mail">Email</string>
+    <string name="tag">Let\'s join and \nDownload whatever we want</string>
+    <string name="register">Register</string>
+    <string name="re_type_password">Re-type Password</string>
+    <string name="your_name">Full Name</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="register_text">Register</string>
+    <string name="login_text">Login</string>
+    <string name="left_arrow">Left Arrow</string>
+    <string name="right_arrow">Right Arrow</string>
+    <string name="register_words">Create new account? SignUp</string>
+    <string name="login_words">Already have an account? Sign in</string>
+    <string name="profile_card_likes">Likes</string>
+    <string name="profile_phone_num_hint">+266 225 225</string>
+    <string name="profile_username_text">Username</string>
+    <string name="profile_photo_image">Profile Photo</string>
+    <string name="profile_card_likes_num">20</string>
+    <string name="profile_download_tap">Downloaded</string>
+    <string name="profile_download_num">120</string>
+    <string name="profile_email_text">example@orgnization.com</string>
+    <string name="todo">TODO</string>
+    <string name="phone_number_register">Phone</string>
+    <string name="show_photo">ImageViewer</string>
+    <string name="liked_fragment">My Photos</string>
+    <string name="retry_checking">Check Again</string>
+    <string name="offline_fragment">Offline</string>
+    <string name="logo_splash_screen">FlickrAPI &amp; AppGarden</string>
+    <string name="logo_splash_screen_powered">Powerded By</string>
+    <string name="offline_fragment_text">"You are Offline!! \nplease check your connetion and try again "</string>
+    <string name="selected_username_apear">Username</string>
+    <string name="send_to">Send to..</string>
 </resources>

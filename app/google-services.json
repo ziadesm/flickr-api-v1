@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "300261312023",
+    "firebase_url": "https://flickrapi-v1-1afb5.firebaseio.com",
+    "project_id": "flickrapi-v1-1afb5",
+    "storage_bucket": "flickrapi-v1-1afb5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:300261312023:android:e27274eadf9fdfe388fe52",
+        "android_client_info": {
+          "package_name": "echomachine.com.flickrapi_v1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "300261312023-gqumckqr5gvi1c3ttpugmbasqh9brhci.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "echomachine.com.flickrapi_v1",
+            "certificate_hash": "b494833d2bfb1d083070e447a54704434da3c758"
+          }
+        },
+        {
+          "client_id": "300261312023-4caufo5uhbct1ck47jlte2rbieud5qc1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDf6fUuXTh3ry1NTw9EAoUIo_iT-clIW8A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "300261312023-4caufo5uhbct1ck47jlte2rbieud5qc1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
