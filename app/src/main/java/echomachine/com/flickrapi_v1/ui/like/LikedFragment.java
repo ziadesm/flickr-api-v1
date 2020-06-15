@@ -46,6 +46,7 @@ public class LikedFragment extends Fragment {
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         repo.getAllLikedPhoto().observe(getActivity(), c -> adapter.setList(c));
         recyclerView.setAdapter(adapter);
+
         ItemTouchHelper.Callback callback = new SimpleRecyclerItemTouchHelper(adapter);
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
         itemTouchHelper.attachToRecyclerView(recyclerView);

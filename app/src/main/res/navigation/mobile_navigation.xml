@@ -77,6 +77,10 @@
             android:name="photoUrl"
             app:argType="string"
             android:defaultValue="default" />
+        <argument
+            android:name="photoOwner"
+            app:argType="string"
+            android:defaultValue="default" />
     </fragment>
 
     <fragment

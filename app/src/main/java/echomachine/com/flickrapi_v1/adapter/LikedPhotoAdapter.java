@@ -24,6 +24,7 @@ import java.util.List;
 import echomachine.com.flickrapi_v1.data.RepositoryPhoto;
 import echomachine.com.flickrapi_v1.pojo.LikedPhoto;
 import echomachine.com.flickrapi_v1.interfaces.ReachTheEndFinally;
+import echomachine.com.flickrapi_v1.ui.like.LikedFragmentDirections;
 
 public class LikedPhotoAdapter extends RecyclerView.Adapter<LikedPhotoAdapter.LikedViewModel> {
 
@@ -63,7 +64,11 @@ public class LikedPhotoAdapter extends RecyclerView.Adapter<LikedPhotoAdapter.Li
 
         holder.imageView.setOnClickListener(v -> {
             NavController navController = Navigation.findNavController(fragment.getActivity(), R.id.nav_host_fragment);
-            navController.navigate(R.id.navigation_selected);
+            LikedFragmentDirections.ActionNavigationLikedToNavigationSelected action =
+                    LikedFragmentDirections.actionNavigationLikedToNavigationSelected();
+            action.setPhotoOwner(photo.getOwner());
+            action.setPhotoUrl(photo.getUrl_s());
+            navController.navigate(action);
         });
 
         if (position == mList.size()) {

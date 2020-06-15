@@ -15,10 +15,13 @@ import android.os.Bundle;
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.motion.widget.MotionLayout;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Environment;
@@ -33,6 +36,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
@@ -40,8 +44,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.List;
 
 import echomachine.com.flickrapi_v1.R;
+import echomachine.com.flickrapi_v1.adapter.SelectedPhotoAdapter;
+import echomachine.com.flickrapi_v1.pojo._PhotoModel;
+import echomachine.com.flickrapi_v1.ui.like.LikedFragmentDirections;
 
 public class SelectedFragment extends Fragment {
 
@@ -53,7 +61,9 @@ public class SelectedFragment extends Fragment {
     private Animation aOpenFabs, aCloseFabs, aOpenRotate, aCloseRotate;
     private ImageView mImageViewer;
     private RecyclerView mRecycler;
+    private MotionLayout motion;
     private boolean isOpen;
+    private SelectedPhotoAdapter adapter;
 
 
     public SelectedFragment() {
@@ -84,6 +94,8 @@ public class SelectedFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_selected, container, false);
 
+        // initialised views here
+        motion = view.findViewById(R.id.selected_motion_scene);
         mChooseFab = view.findViewById(R.id.selected_floating_action_btn);
         mDownloadFab = view.findViewById(R.id.selected_download_floating_action_btn);
         mShareFab = view.findViewById(R.id.selected_share_floating_action_btn);
@@ -91,17 +103,18 @@ public class SelectedFragment extends Fragment {
         mImageViewer = view.findViewById(R.id.selected_image_header);
         mRecycler = view.findViewById(R.id.selected_recycler_view);
 
+        viewModel = ViewModelProviders
+                .of(this).get(SelectedViewModel.class);
+
         // Animation initialised here
         aOpenFabs = AnimationUtils.loadAnimation(getContext(), R.anim.anim_fab_opens);
         aCloseFabs = AnimationUtils.loadAnimation(getContext(), R.anim.anim_fab_closes);
         aOpenRotate = AnimationUtils.loadAnimation(getContext(), R.anim.anim_rotate_open_main_fab);
         aCloseRotate = AnimationUtils.loadAnimation(getContext(), R.anim.anim_rotate_close_main_fab);
 
-        viewModel = ViewModelProviders
-                .of(this).get(SelectedViewModel.class);
+        motion.onStartTemporaryDetach();
 
-
-
+        // Floating action button functionality
         mChooseFab.setOnClickListener(v -> {
               if (isOpen) {
                   closeFabToCloseFabs();
@@ -111,14 +124,12 @@ public class SelectedFragment extends Fragment {
                   isOpen = true;
               }
         });
-
         mShareFab.setOnClickListener(v -> {
             if (getArguments() != null) {
                 SelectedFragmentArgs args = SelectedFragmentArgs.fromBundle(getArguments());
                 shareItem(args.getPhotoUrl());
             }
         });
-
         mDownloadFab.setOnClickListener(v -> {
             if (getArguments() != null && isStoragePermissionGranted()) {
                 SelectedFragmentArgs args = SelectedFragmentArgs.fromBundle(getArguments());
@@ -127,7 +138,6 @@ public class SelectedFragment extends Fragment {
                 Toast.makeText(getContext(), "Please allow us to your storage", Toast.LENGTH_LONG).show();
             }
         });
-
         mWallpaperFab.setOnClickListener(v -> {
             WallpaperManager manager = WallpaperManager.getInstance(getContext());
 
@@ -146,7 +156,38 @@ public class SelectedFragment extends Fragment {
             }
         });
 
+        Log.d(TAG, "I'M HERE BY THE WAY");
+        adapter = new SelectedPhotoAdapter();
+        mRecycler.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+        viewModel.getMutableLiveData().observe(getActivity(), photos -> adapter.setList(photos));
+        mRecycler.setAdapter(adapter);
+
         return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view
+            , @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        // Getting passing data between HomeFragment, LikedFragment and SelectedFragment
+        if (getArguments() != null) {
+            SelectedFragmentArgs args = SelectedFragmentArgs.fromBundle(getArguments());
+            viewModel.setUserId(args.getPhotoOwner());
+            viewModel.setImageUri(args.getPhotoUrl());
+        }
+
+        if (viewModel.getImageUri() != null) {
+            Picasso.get()
+                    .load(viewModel.getImageUri())
+                    .placeholder(R.drawable.ic_place_holder_home)
+                    .fit()
+                    .into(mImageViewer);
+        }
+
+        if (viewModel.getUserId() != null) {
+            viewModel.getProfilePhotosPage(viewModel.getUserId());
+        }
     }
 
     public void downloadPhoto(String url) {
@@ -169,21 +210,6 @@ public class SelectedFragment extends Fragment {
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
 
         downloadManager.enqueue(request);
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view
-            , @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        if (getArguments() != null) {
-            SelectedFragmentArgs args = SelectedFragmentArgs.fromBundle(getArguments());
-            String url = args.getPhotoUrl();
-            Picasso.get()
-                    .load(url)
-                    .placeholder(R.drawable.ic_place_holder_home)
-                    .into(mImageViewer);
-            Log.d(TAG, "" + url);
-        }
     }
 
     private void openFabToOpenFabs() {

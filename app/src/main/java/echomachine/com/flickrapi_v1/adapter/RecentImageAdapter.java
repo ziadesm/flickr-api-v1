@@ -109,6 +109,7 @@ public class RecentImageAdapter extends PagedListAdapter<Photo, RecentImageAdapt
                     HomeFragmentDirections.ActionNavigationHomeToNavigationSelected action =
                             HomeFragmentDirections.actionNavigationHomeToNavigationSelected();
                     action.setPhotoUrl(getItem(getLayoutPosition()).getUrl_s());
+                    action.setPhotoOwner(getItem(getLayoutPosition()).getOwner());
                     navController.navigate(action);
                 }
             });

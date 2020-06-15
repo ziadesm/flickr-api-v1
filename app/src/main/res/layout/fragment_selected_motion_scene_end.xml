@@ -1,12 +1,10 @@
-<androidx.constraintlayout.motion.widget.MotionLayout
-    android:id="@+id/selected_motion_scene"
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="echomachine.com.flickrapi_v1.ui.selected.SelectedFragment"
-    app:layoutDescription="@xml/fragment_selected_scene">
+    tools:context="echomachine.com.flickrapi_v1.ui.selected.SelectedFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <ImageView
@@ -20,22 +18,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/selected_recycler_view"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/content_layout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
-
     <LinearLayout
         android:id="@+id/content_layout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="15dp"
         android:background="@drawable/fab_layout_bg"
         app:layout_constraintBottom_toBottomOf="@id/selected_image_header"
         app:layout_constraintEnd_toEndOf="parent"
@@ -62,7 +49,6 @@
             android:tint="@color/notify_color_high"
             android:visibility="invisible"
             app:fabSize="mini"
-            android:layout_gravity="center"
             app:rippleColor="@android:color/white" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -75,7 +61,6 @@
             android:backgroundTint="#8C9A99"
             android:visibility="invisible"
             app:rippleColor="@android:color/white"
-            android:layout_gravity="center"
             app:fabSize="mini"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -88,8 +73,16 @@
             android:layout_marginStart="10dp"
             app:rippleColor="@android:color/tab_indicator_text"
             app:fabSize="mini"
-            android:layout_gravity="center"
             android:visibility="invisible" />
 
     </LinearLayout>
-</androidx.constraintlayout.motion.widget.MotionLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/selected_recycler_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/content_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

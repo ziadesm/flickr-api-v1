@@ -1,10 +1,10 @@
 package echomachine.com.flickrapi_v1.interfaces;
 
+import echomachine.com.flickrapi_v1.pojo.SelectedPhotos;
 import echomachine.com.flickrapi_v1.pojo._PhotoModel;
 import android.util.Log;
 
 import io.reactivex.Single;
-import io.reactivex.plugins.RxJavaPlugins;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -46,8 +46,8 @@ public class PhotoClient {
                 , API_KEY, text, URL_S, page, JSON_FORMAT, NOJSON_CALLBACK);
     }
 
-    public Call<_PhotoModel> getProfilePhotosPage(String user_id) {
-        return apiConfig.getProfilePhotosPage("flickr.people.getPhotos"
+    public Call<SelectedPhotos> getProfilePhotosPage(String user_id) {
+        return apiConfig.getProfilePhotos("flickr.people.getPhotos"
                 , API_KEY, user_id, URL_S, JSON_FORMAT, NOJSON_CALLBACK);
     }
 }

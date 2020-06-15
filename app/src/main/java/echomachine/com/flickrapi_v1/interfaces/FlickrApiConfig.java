@@ -1,4 +1,5 @@
 package echomachine.com.flickrapi_v1.interfaces;
+import echomachine.com.flickrapi_v1.pojo.SelectedPhotos;
 import echomachine.com.flickrapi_v1.pojo._PhotoModel;
 
 import io.reactivex.Single;
@@ -28,7 +29,7 @@ public interface FlickrApiConfig {
             ,@Query("nojsoncallback") int nojsoncallback);
 
     @GET("rest/")
-    Call<_PhotoModel> getProfilePhotosPage(
+    Call<SelectedPhotos> getProfilePhotos(
             @Query("method") String method
             ,@Query("api_key") String api_key
             ,@Query("user_id") String user_id
