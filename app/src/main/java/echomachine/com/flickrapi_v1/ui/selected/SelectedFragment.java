@@ -170,7 +170,7 @@ public class SelectedFragment extends Fragment {
             , @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // Getting passing data between HomeFragment, LikedFragment and SelectedFragment
+        // Getting passing data between HomeFragment & LikedFragment --> SelectedFragment
         if (getArguments() != null) {
             SelectedFragmentArgs args = SelectedFragmentArgs.fromBundle(getArguments());
             viewModel.setUserId(args.getPhotoOwner());

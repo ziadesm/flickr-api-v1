@@ -36,7 +36,7 @@
     <string name="profile_photo_image">Profile Photo</string>
     <string name="profile_card_likes_num">20</string>
     <string name="profile_download_tap">Downloaded</string>
-    <string name="profile_download_num">120</string>
+    <string name="profile_download_num">+20</string>
     <string name="profile_email_text">example@orgnization.com</string>
     <string name="todo">TODO</string>
     <string name="phone_number_register">Phone</string>

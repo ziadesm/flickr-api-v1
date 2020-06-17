@@ -1,12 +1,19 @@
 package echomachine.com.flickrapi_v1.ui.profile;
+import echomachine.com.flickrapi_v1.MainActivity;
 import echomachine.com.flickrapi_v1.R;
+import echomachine.com.flickrapi_v1.workers.SaveRegisterData;
+
 import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.work.Data;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
 
 import android.os.Handler;
 import android.text.TextUtils;
@@ -19,7 +26,14 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.UserProfileChangeRequest;
+
+import static echomachine.com.flickrapi_v1.Constant.KEY_SAVE_EMAIL;
+import static echomachine.com.flickrapi_v1.Constant.KEY_SAVE_NAME;
+import static echomachine.com.flickrapi_v1.Constant.KEY_SAVE_PHONE;
 
 public class RegisterFragment extends Fragment {
 
@@ -30,7 +44,8 @@ public class RegisterFragment extends Fragment {
     private FirebaseAuth auth;
     private NavController navController;
     private ProgressBar progressBar;
-    Handler handler;
+    private Handler handler;
+    private WorkManager manager;
 
     public RegisterFragment() {
     }
@@ -38,6 +53,7 @@ public class RegisterFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        manager = WorkManager.getInstance(getContext());
         handler = new Handler();
         navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
         OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
@@ -86,6 +102,9 @@ public class RegisterFragment extends Fragment {
         String phone = phoneEt.getText().toString().trim();
         String password = passwordEt.getText().toString().trim();
         String name = nameEt.getText().toString().trim();
+        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                .setDisplayName(name)
+                .build();
 
         if (TextUtils.isEmpty(email)) {
             emailEt.setError("E-mail required");
@@ -104,10 +123,11 @@ public class RegisterFragment extends Fragment {
             return;
         }
 
-
         handler.postDelayed(() -> auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
+            auth.getCurrentUser().updateProfile(profileUpdates);
             if (task.isSuccessful()) {
                 progressBar.setProgress(80);
+                applySavingDataToFire(name, email, phone);
                 navController.navigate(R.id.navigation_profile);
             } else {
                 Log.d(TAG, "newRegisterUser: "+ task.getException().getMessage());
@@ -115,6 +135,21 @@ public class RegisterFragment extends Fragment {
                 mRegisterBtn.setEnabled(true);
             }
         }), 1000);
+    }
 
+    private Data createUserData(String name, String email, String phone) {
+        Data.Builder builder = new Data.Builder();
+        builder.putString(KEY_SAVE_NAME, name);
+        builder.putString(KEY_SAVE_EMAIL, email);
+        builder.putString(KEY_SAVE_PHONE, phone);
+        return builder.build();
+    }
+
+    public void applySavingDataToFire(String name, String email, String phone) {
+        OneTimeWorkRequest request = new OneTimeWorkRequest.Builder(SaveRegisterData.class)
+                .setInputData(createUserData(name, email, phone))
+                .build();
+
+        manager.enqueue(request);
     }
 }

@@ -3,6 +3,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
@@ -15,18 +16,29 @@ import androidx.navigation.Navigation;
 import echomachine.com.flickrapi_v1.R;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class ProfileFragment extends Fragment {
 
     private ProfileViewModel profileViewModel;
     private FirebaseAuth auth;
     private NavController navController;
+    private TextView emailTv, phoneTv, nameTv;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         profileViewModel =
                 ViewModelProviders.of(this).get(ProfileViewModel.class);
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
+        emailTv = root.findViewById(R.id.profile_email_tv);
+        phoneTv = root.findViewById(R.id.profile_phone_tv);
+        nameTv = root.findViewById(R.id.profile_name_tv);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            emailTv.setText(user.getEmail());
+            nameTv.setText(user.getDisplayName());
+            phoneTv.setText(user.getPhoneNumber());
+        }
         return root;
     }
 

@@ -6,7 +6,6 @@ import echomachine.com.flickrapi_v1.adapter.RecentImageAdapter;
 import echomachine.com.flickrapi_v1.receiver.network.ConnectivityReceiver;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
@@ -40,22 +39,19 @@ import static android.content.Context.SEARCH_SERVICE;
 public class HomeFragment extends Fragment
         implements ConnectivityReceiver.ConnectivityReceiverListener {
 
-    private static final String TAG = "ZiadHome";
     private HomeViewModel homeViewModel;
-    private RecyclerView aRecycler;
+    RecyclerView aRecycler;
     private RecentImageAdapter aAdapter;
     private SwipeRefreshLayout refreshLayout;
-    private SearchView searchView = null;
-    private SearchView.OnQueryTextListener listener;
-    private NavController navController;
-    BottomNavigationView navView;
+    SearchView searchView = null;
+    SearchView.OnQueryTextListener listener;
+    NavController navController;
     ConnectivityReceiver receiver;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
-        navView = getActivity().findViewById(R.id.nav_view);
         aRecycler = root.findViewById(R.id.recycler);
         refreshLayout = root.findViewById(R.id.home_fragment_layout);
 
@@ -136,18 +132,6 @@ public class HomeFragment extends Fragment
         super.onCreateOptionsMenu(menu, inflater);
     }
 
-    private void checkInternetConnection() {
-        boolean connected = ConnectivityReceiver.isConnected();
-        if (!connected) {
-            showOfflineFragment();
-        }
-    }
-
-    private void showOfflineFragment() {
-        navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
-        navController.navigate(R.id.navigation_offline);
-    }
-
     @Override
     public void onResume() {
         super.onResume();
@@ -160,12 +144,16 @@ public class HomeFragment extends Fragment
         MyApp.getINSTANCE().setConnectivityListener(this);
     }
 
-    @Override
-    public void onStop() {
-        super.onStop();
-        getActivity().unregisterReceiver(receiver);
+    private void checkInternetConnection() {
+        boolean connected = ConnectivityReceiver.isConnected();
+        if (!connected) {
+            showOfflineFragment();
+        }
+    }
 
-        MyApp.getINSTANCE().setConnectivityListener(this);
+    private void showOfflineFragment() {
+        navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+        navController.navigate(R.id.navigation_offline);
     }
 
     @Override
