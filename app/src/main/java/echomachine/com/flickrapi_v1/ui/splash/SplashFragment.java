@@ -49,6 +49,12 @@ public class SplashFragment extends Fragment {
         poweredText.startAnimation(animation);
         logoIV.startAnimation(animation);
 
+        return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         new CountDownTimer(2200, 550) {
 
             int progress = 50;
@@ -63,7 +69,5 @@ public class SplashFragment extends Fragment {
                 navController.navigate(R.id.navigation_home);
             }
         }.start();
-
-        return view;
     }
 }

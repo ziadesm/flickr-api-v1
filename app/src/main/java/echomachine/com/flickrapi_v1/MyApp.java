@@ -1,8 +1,5 @@
 package echomachine.com.flickrapi_v1;
 import android.app.Application;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.os.Build;
 
 import echomachine.com.flickrapi_v1.receiver.network.ConnectivityReceiver;
 
@@ -15,7 +12,6 @@ public class MyApp extends Application {
     public void onCreate() {
         super.onCreate();
         INSTANCE = this;
-
     }
 
     public static synchronized MyApp getINSTANCE(){

@@ -71,6 +71,8 @@ public class LikedPhotoAdapter extends RecyclerView.Adapter<LikedPhotoAdapter.Li
             navController.navigate(action);
         });
 
+
+
         if (position == mList.size()) {
             listener.OnBottomReach(position);
         } else if (mList.size() >= 16 && (position == 0 || position == 1)) {

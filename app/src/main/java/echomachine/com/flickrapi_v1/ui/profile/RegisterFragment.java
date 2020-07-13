@@ -1,12 +1,10 @@
 package echomachine.com.flickrapi_v1.ui.profile;
-import echomachine.com.flickrapi_v1.MainActivity;
 import echomachine.com.flickrapi_v1.R;
 import echomachine.com.flickrapi_v1.workers.SaveRegisterData;
 
 import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
@@ -102,9 +100,6 @@ public class RegisterFragment extends Fragment {
         String phone = phoneEt.getText().toString().trim();
         String password = passwordEt.getText().toString().trim();
         String name = nameEt.getText().toString().trim();
-        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                .setDisplayName(name)
-                .build();
 
         if (TextUtils.isEmpty(email)) {
             emailEt.setError("E-mail required");
@@ -124,7 +119,6 @@ public class RegisterFragment extends Fragment {
         }
 
         handler.postDelayed(() -> auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
-            auth.getCurrentUser().updateProfile(profileUpdates);
             if (task.isSuccessful()) {
                 progressBar.setProgress(80);
                 applySavingDataToFire(name, email, phone);

@@ -1,5 +1,4 @@
 package echomachine.com.flickrapi_v1.ui.like;
-
 import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
@@ -12,28 +11,20 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-
-import java.util.List;
 
 import echomachine.com.flickrapi_v1.R;
 
 import echomachine.com.flickrapi_v1.adapter.LikedPhotoAdapter;
 import echomachine.com.flickrapi_v1.adapter.SimpleRecyclerItemTouchHelper;
 import echomachine.com.flickrapi_v1.data.RepositoryPhoto;
-import echomachine.com.flickrapi_v1.pojo.LikedPhoto;
 
 public class LikedFragment extends Fragment {
-
     private static final String TAG = "ZiadLiked";
     private RepositoryPhoto repo;
     private RecyclerView recyclerView;
     private LikedPhotoAdapter adapter;
-    private List<LikedPhoto> mList;
     private NavController navController;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,

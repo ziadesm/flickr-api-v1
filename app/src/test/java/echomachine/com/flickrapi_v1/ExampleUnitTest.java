@@ -1,7 +1,14 @@
 package echomachine.com.flickrapi_v1;
 
+import android.content.Context;
+
 import org.junit.Test;
 
+import echomachine.com.flickrapi_v1.data.RepositoryPhoto;
+import echomachine.com.flickrapi_v1.pojo.LikedPhoto;
+import io.reactivex.Completable;
+
+import static java.security.AccessController.getContext;
 import static org.junit.Assert.*;
 
 /**
@@ -14,4 +21,5 @@ public class ExampleUnitTest {
     public void addition_isCorrect() {
         assertEquals(4, 2 + 2);
     }
+
 }

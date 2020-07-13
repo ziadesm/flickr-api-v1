@@ -1,14 +1,9 @@
 package echomachine.com.flickrapi_v1;
-
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -31,9 +26,10 @@ public class MainActivity extends AppCompatActivity{
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        appBarConfiguration = new AppBarConfiguration.Builder(R.id.navigation_home,
+        appBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.navigation_home,
                 R.id.navigation_profile,
-                R.id.navigation_notifications)
+                R.id.navigation_liked)
                 .build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
@@ -50,7 +46,6 @@ public class MainActivity extends AppCompatActivity{
                 case R.id.navigation_offline:
                     hideBars();
                     break;
-                case R.id.navigation_liked:
                 case R.id.navigation_selected:
                     navView.setVisibility(View.GONE);
                     break;

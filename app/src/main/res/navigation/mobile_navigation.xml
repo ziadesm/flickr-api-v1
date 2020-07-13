@@ -38,12 +38,6 @@
         tools:layout="@layout/fragment_profile"/>
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="echomachine.com.flickrapi_v1.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
-
-    <fragment
         android:id="@+id/navigation_login"
         android:name="echomachine.com.flickrapi_v1.ui.profile.LoginFragment"
         android:label="@string/login"

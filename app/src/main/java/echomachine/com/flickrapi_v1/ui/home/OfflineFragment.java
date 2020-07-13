@@ -1,5 +1,4 @@
 package echomachine.com.flickrapi_v1.ui.home;
-
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -7,9 +6,12 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import echomachine.com.flickrapi_v1.MyApp;
 import echomachine.com.flickrapi_v1.R;
+import echomachine.com.flickrapi_v1.receiver.network.ConnectivityReceiver;
 
 import android.content.Context;
+import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -20,11 +22,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 
-public class OfflineFragment extends Fragment {
+import static android.net.ConnectivityManager.CONNECTIVITY_ACTION;
+
+public class OfflineFragment extends Fragment
+        implements ConnectivityReceiver.ConnectivityReceiverListener {
 
     private NavController navController;
     private Button mBtnoffline;
     private ProgressBar bar;
+    private ConnectivityReceiver receiver;
 
     @Nullable
     @Override
@@ -59,15 +65,6 @@ public class OfflineFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
-        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
-            @Override
-            public void handleOnBackPressed() {
-                // Handle the back button event
-                navController.navigate(R.id.navigation_home);
-            }
-        };
-        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
     }
 
     private boolean isOnline() {
@@ -77,5 +74,20 @@ public class OfflineFragment extends Fragment {
         boolean connected = activeNetwork != null
                 && activeNetwork.isConnectedOrConnecting();
         return connected;
+    }
+
+    @Override
+    public void onNetworkConnectionChanged(boolean isConnected) {
+        if (isConnected) {
+            navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+            OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+                @Override
+                public void handleOnBackPressed() {
+                    // Handle the back button event
+                    navController.navigate(R.id.navigation_home);
+                }
+            };
+            requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+        }
     }
 }

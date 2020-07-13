@@ -1,4 +1,6 @@
 package echomachine.com.flickrapi_v1.ui.profile;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +18,11 @@ import androidx.navigation.Navigation;
 import echomachine.com.flickrapi_v1.R;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+
+import static echomachine.com.flickrapi_v1.Constant.KEY_SAVE_EMAIL_PREF;
+import static echomachine.com.flickrapi_v1.Constant.KEY_SAVE_NAME_PREF;
+import static echomachine.com.flickrapi_v1.Constant.KEY_SAVE_PHONE_PREF;
+import static echomachine.com.flickrapi_v1.Constant.KEY_SAVE_USER_PHONE;
 
 public class ProfileFragment extends Fragment {
 
@@ -33,13 +39,22 @@ public class ProfileFragment extends Fragment {
         emailTv = root.findViewById(R.id.profile_email_tv);
         phoneTv = root.findViewById(R.id.profile_phone_tv);
         nameTv = root.findViewById(R.id.profile_name_tv);
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null) {
-            emailTv.setText(user.getEmail());
-            nameTv.setText(user.getDisplayName());
-            phoneTv.setText(user.getPhoneNumber());
-        }
+
+        displayNamePhone();
+
         return root;
+    }
+
+    private void displayNamePhone() {
+        SharedPreferences preferences = getContext()
+                .getSharedPreferences(KEY_SAVE_USER_PHONE, Context.MODE_PRIVATE);
+        String name = preferences.getString(KEY_SAVE_NAME_PREF, null);
+        String phone = preferences.getString(KEY_SAVE_PHONE_PREF, null);
+        String email = preferences.getString(KEY_SAVE_EMAIL_PREF, null);
+
+        phoneTv.setText(phone);
+        nameTv.setText(name);
+        emailTv.setText(email);
     }
 
     @Override
@@ -50,7 +65,6 @@ public class ProfileFragment extends Fragment {
         if (auth.getCurrentUser() == null) {
             navController.navigate(R.id.navigation_register);
         }
-        navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
         OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
             @Override
             public void handleOnBackPressed() {

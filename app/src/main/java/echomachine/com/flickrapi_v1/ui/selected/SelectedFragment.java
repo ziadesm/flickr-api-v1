@@ -1,15 +1,8 @@
 package echomachine.com.flickrapi_v1.ui.selected;
-import android.Manifest;
-import android.app.DownloadManager;
 import android.app.WallpaperManager;
-import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
@@ -17,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.motion.widget.MotionLayout;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -36,25 +28,18 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.List;
 
 import echomachine.com.flickrapi_v1.R;
 import echomachine.com.flickrapi_v1.adapter.SelectedPhotoAdapter;
-import echomachine.com.flickrapi_v1.pojo._PhotoModel;
-import echomachine.com.flickrapi_v1.ui.like.LikedFragmentDirections;
+import echomachine.com.flickrapi_v1.utilties.HelperMethods;
 
 public class SelectedFragment extends Fragment {
-
     private static final String TAG = "ZiadSelected";
-    private static final int STORAGE_PERMISSION_REQUEST = 101;
     private SelectedViewModel viewModel;
     private NavController navController;
     private FloatingActionButton mChooseFab, mDownloadFab, mShareFab, mWallpaperFab;
@@ -64,7 +49,6 @@ public class SelectedFragment extends Fragment {
     private MotionLayout motion;
     private boolean isOpen;
     private SelectedPhotoAdapter adapter;
-
 
     public SelectedFragment() {
     }
@@ -127,13 +111,14 @@ public class SelectedFragment extends Fragment {
         mShareFab.setOnClickListener(v -> {
             if (getArguments() != null) {
                 SelectedFragmentArgs args = SelectedFragmentArgs.fromBundle(getArguments());
-                shareItem(args.getPhotoUrl());
+                HelperMethods.shareItem(args.getPhotoUrl(), getActivity(), getContext());
             }
         });
         mDownloadFab.setOnClickListener(v -> {
-            if (getArguments() != null && isStoragePermissionGranted()) {
+            if (getArguments() != null && HelperMethods
+                    .isStoragePermissionGranted(getContext(), getActivity())) {
                 SelectedFragmentArgs args = SelectedFragmentArgs.fromBundle(getArguments());
-                downloadPhoto(args.getPhotoUrl());
+                HelperMethods.downloadPhoto(args.getPhotoUrl(), getContext());
             } else {
                 Toast.makeText(getContext(), "Please allow us to your storage", Toast.LENGTH_LONG).show();
             }
@@ -190,28 +175,6 @@ public class SelectedFragment extends Fragment {
         }
     }
 
-    public void downloadPhoto(String url) {
-        Uri Download_Uri = Uri.parse(url);
-        DownloadManager downloadManager = (DownloadManager) getContext().getSystemService(Context.DOWNLOAD_SERVICE);
-        DownloadManager.Request request = new DownloadManager.Request(Download_Uri);
-
-        //Restrict the types of networks over which this download may proceed.
-        request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI | DownloadManager.Request.NETWORK_MOBILE);
-        //Set whether this download may proceed over a roaming connection.
-        request.setAllowedOverRoaming(false);
-        //Set the title of this download, to be displayed in notifications (if enabled).
-        request.setTitle("Downloading");
-        //Set a description of this download, to be displayed in notifications (if enabled)
-        request.setDescription("Downloading File");
-        //Set the local destination for the downloaded file to a path within the application's external files directory
-        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS
-                , "wwgallery" + "_" + System.currentTimeMillis() + ".jpg");
-
-        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-
-        downloadManager.enqueue(request);
-    }
-
     private void openFabToOpenFabs() {
         mChooseFab.startAnimation(aOpenRotate);
 
@@ -228,51 +191,6 @@ public class SelectedFragment extends Fragment {
         mDownloadFab.startAnimation(aCloseFabs);
     }
 
-    public void shareItem(String url) {
-        Picasso.get().load(url).into(new Target() {
-            @Override public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                Intent i = new Intent(Intent.ACTION_SEND);
-                i.setType("image/*");
-                i.putExtra(Intent.EXTRA_STREAM, getLocalBitmapUri(bitmap));
-                startActivity(Intent.createChooser(i, "Share Image"));
-            }
-
-            @Override
-            public void onBitmapFailed(Exception e, Drawable errorDrawable) { }
-            @Override public void onPrepareLoad(Drawable placeHolderDrawable) { }
-        });
-    }
-
-    public Uri getLocalBitmapUri(Bitmap bmp) {
-        Uri bmpUri = null;
-        try {
-            File file =  new File(getContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-                    , "ww_gallery" + System.currentTimeMillis() + ".png");
-
-            FileOutputStream out = new FileOutputStream(file);
-            bmp.compress(Bitmap.CompressFormat.PNG, 100, out);
-            out.close();
-            bmpUri = Uri.fromFile(file);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return bmpUri;
-    }
-
-    public boolean isStoragePermissionGranted() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (getContext().checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    == PackageManager.PERMISSION_GRANTED){
-                return true;
-            } else {
-                requestPermissions(new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE}, STORAGE_PERMISSION_REQUEST);
-                return false;
-            }
-        } else {
-            return true;
-        }
-    }
-
     @Override
     public void onRequestPermissionsResult(int requestCode
             , @NonNull String[] permissions
@@ -280,7 +198,7 @@ public class SelectedFragment extends Fragment {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             SelectedFragmentArgs args = SelectedFragmentArgs.fromBundle(getArguments());
-            downloadPhoto(args.getPhotoUrl());
+            HelperMethods.downloadPhoto(args.getPhotoUrl(), getContext());
         }
     }
 }
