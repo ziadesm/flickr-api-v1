@@ -1,12 +1,11 @@
 package echomachine.com.flickrapi_v1;
 import android.app.Application;
 
-import echomachine.com.flickrapi_v1.receiver.network.ConnectivityReceiver;
+import echomachine.com.flickrapi_v1.receiver.ConnectivityReceiver;
 
 public class MyApp extends Application {
     private static final String TAG = "ZiadNotify";
     private static MyApp INSTANCE;
-
 
     @Override
     public void onCreate() {

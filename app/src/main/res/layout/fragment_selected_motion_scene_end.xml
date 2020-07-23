@@ -17,7 +17,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
+<!--
     <LinearLayout
         android:id="@+id/content_layout"
         android:layout_width="0dp"
@@ -75,14 +75,30 @@
             app:fabSize="mini"
             android:visibility="invisible" />
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/selected_map_floating_action_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_selected_map"
+            android:tint="#B129C8"
+            android:backgroundTint="#8EBBC1"
+            android:layout_marginStart="10dp"
+            app:rippleColor="@android:color/tab_indicator_text"
+            app:fabSize="mini"
+            android:visibility="invisible" />
+
     </LinearLayout>
 
+    -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/selected_recycler_view"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@id/content_layout"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+<!--        app:layout_constraintTop_toBottomOf="@id/content_layout"-->
+
 </androidx.constraintlayout.widget.ConstraintLayout>

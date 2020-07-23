@@ -1,4 +1,4 @@
-package echomachine.com.flickrapi_v1.receiver.network;
+package echomachine.com.flickrapi_v1.receiver;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;

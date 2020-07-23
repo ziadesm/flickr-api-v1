@@ -89,5 +89,18 @@
             app:fabSize="mini"
             android:layout_gravity="center"
             android:visibility="invisible" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/selected_map_floating_action_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_selected_wallpaper"
+            android:tint="#B129C8"
+            android:backgroundTint="#8EBBC1"
+            android:layout_marginStart="10dp"
+            app:rippleColor="@android:color/tab_indicator_text"
+            app:fabSize="mini"
+            android:layout_gravity="center"
+            android:visibility="invisible" />
     </LinearLayout>
 </androidx.constraintlayout.motion.widget.MotionLayout>

@@ -29,7 +29,8 @@ public class MainActivity extends AppCompatActivity{
         appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.navigation_home,
                 R.id.navigation_profile,
-                R.id.navigation_liked)
+                R.id.navigation_liked,
+                R.id.navigation_map)
                 .build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
@@ -44,6 +45,7 @@ public class MainActivity extends AppCompatActivity{
                 case R.id.navigation_register:
                 case R.id.navigation_splash:
                 case R.id.navigation_offline:
+                case R.id.navigation_map:
                     hideBars();
                     break;
                 case R.id.navigation_selected:

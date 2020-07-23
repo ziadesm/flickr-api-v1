@@ -6,12 +6,10 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import echomachine.com.flickrapi_v1.MyApp;
 import echomachine.com.flickrapi_v1.R;
-import echomachine.com.flickrapi_v1.receiver.network.ConnectivityReceiver;
+import echomachine.com.flickrapi_v1.receiver.ConnectivityReceiver;
 
 import android.content.Context;
-import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -21,8 +19,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
-
-import static android.net.ConnectivityManager.CONNECTIVITY_ACTION;
 
 public class OfflineFragment extends Fragment
         implements ConnectivityReceiver.ConnectivityReceiverListener {

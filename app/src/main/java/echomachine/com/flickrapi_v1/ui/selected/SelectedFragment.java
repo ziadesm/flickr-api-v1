@@ -1,4 +1,5 @@
 package echomachine.com.flickrapi_v1.ui.selected;
+import android.app.Dialog;
 import android.app.WallpaperManager;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -27,6 +28,8 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.squareup.picasso.Picasso;
 
@@ -38,11 +41,13 @@ import echomachine.com.flickrapi_v1.R;
 import echomachine.com.flickrapi_v1.adapter.SelectedPhotoAdapter;
 import echomachine.com.flickrapi_v1.utilties.HelperMethods;
 
+import static echomachine.com.flickrapi_v1.Constant.ERROR_DIALOG_REQUEST;
+
 public class SelectedFragment extends Fragment {
     private static final String TAG = "ZiadSelected";
     private SelectedViewModel viewModel;
     private NavController navController;
-    private FloatingActionButton mChooseFab, mDownloadFab, mShareFab, mWallpaperFab;
+    private FloatingActionButton mChooseFab, mDownloadFab, mShareFab, mWallpaperFab, mMapFab;
     private Animation aOpenFabs, aCloseFabs, aOpenRotate, aCloseRotate;
     private ImageView mImageViewer;
     private RecyclerView mRecycler;
@@ -83,9 +88,11 @@ public class SelectedFragment extends Fragment {
         mChooseFab = view.findViewById(R.id.selected_floating_action_btn);
         mDownloadFab = view.findViewById(R.id.selected_download_floating_action_btn);
         mShareFab = view.findViewById(R.id.selected_share_floating_action_btn);
+        mMapFab = view.findViewById(R.id.selected_map_floating_action_btn);
         mWallpaperFab = view.findViewById(R.id.selected_set_as_wallpaper_floating_action_btn);
         mImageViewer = view.findViewById(R.id.selected_image_header);
         mRecycler = view.findViewById(R.id.selected_recycler_view);
+
 
         viewModel = ViewModelProviders
                 .of(this).get(SelectedViewModel.class);
@@ -140,6 +147,7 @@ public class SelectedFragment extends Fragment {
                 e.printStackTrace();
             }
         });
+        mMapFab.setOnClickListener(v -> { goToMapFragment(); });
 
         Log.d(TAG, "I'M HERE BY THE WAY");
         adapter = new SelectedPhotoAdapter();
@@ -148,6 +156,23 @@ public class SelectedFragment extends Fragment {
         mRecycler.setAdapter(adapter);
 
         return view;
+    }
+
+    private void goToMapFragment() {
+        int available = GoogleApiAvailability.getInstance()
+                .isGooglePlayServicesAvailable(getContext());
+
+        if (available == ConnectionResult.SUCCESS) {
+            navController.navigate(R.id.navigation_map);
+        } else if (GoogleApiAvailability.getInstance().isUserResolvableError(available)) {
+            Dialog dialog = GoogleApiAvailability.getInstance()
+                    .getErrorDialog(getActivity(), available, ERROR_DIALOG_REQUEST);
+            dialog.setCancelable(true);
+            dialog.show();
+            Toast.makeText(getContext(), "Play service has error but we can fix it", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(getContext(), "Play service is not available", Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override

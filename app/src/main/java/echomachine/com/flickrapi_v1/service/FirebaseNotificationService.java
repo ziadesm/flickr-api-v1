@@ -1,4 +1,4 @@
-package echomachine.com.flickrapi_v1.receiver;
+package echomachine.com.flickrapi_v1.service;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;

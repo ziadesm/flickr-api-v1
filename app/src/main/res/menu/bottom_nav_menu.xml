@@ -19,4 +19,10 @@
         android:menuCategory="secondary"
         android:title="@string/title_liked" />
 
+    <item
+        android:id="@+id/navigation_map"
+        android:icon="@drawable/ic_selected_map"
+        android:menuCategory="secondary"
+        android:title="@string/title_map" />
+
 </menu>

@@ -3,7 +3,7 @@ import android.app.SearchManager;
 
 import echomachine.com.flickrapi_v1.MyApp;
 import echomachine.com.flickrapi_v1.adapter.RecentImageAdapter;
-import echomachine.com.flickrapi_v1.receiver.network.ConnectivityReceiver;
+import echomachine.com.flickrapi_v1.receiver.ConnectivityReceiver;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;

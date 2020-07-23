@@ -120,4 +120,9 @@
             app:enterAnim="@anim/fragment_close_enter"
             app:exitAnim="@anim/fragment_close_exit" />
     </fragment>
+    <fragment
+        android:id="@+id/navigation_map"
+        android:name="echomachine.com.flickrapi_v1.ui.map.MapFragment"
+        android:label="fragment_map"
+        tools:layout="@layout/fragment_map" />
 </navigation>

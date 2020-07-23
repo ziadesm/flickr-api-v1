@@ -49,4 +49,6 @@
     <string name="offline_fragment_text">"You are Offline!! \nplease check your connetion and try again "</string>
     <string name="selected_username_apear">Username</string>
     <string name="send_to">Send to..</string>
+    <string name="title_map">Photo Map</string>
+    <string name="map_fragment_search_hint">Enter Address, City or Zip Code</string>
 </resources>
