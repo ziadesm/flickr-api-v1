@@ -26,12 +26,9 @@ public abstract class OnDoubleClickListener implements View.OnClickListener {
             onDoubleClick(v);
         } else {
             firstClickTime = now;
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    onSingleClick(v);
-                    firstClickTime = 0L;
-                }
+            handler.postDelayed(() -> {
+                onSingleClick(v);
+                firstClickTime = 0L;
             }, doubleClickTimeout);
         }
     }

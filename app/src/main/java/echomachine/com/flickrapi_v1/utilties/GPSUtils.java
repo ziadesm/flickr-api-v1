@@ -2,6 +2,8 @@ package echomachine.com.flickrapi_v1.utilties;
 import android.app.Activity;
 import android.content.Context;
 import android.content.IntentSender;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.LocationManager;
 import android.util.Log;
 import android.widget.Toast;
@@ -14,8 +16,12 @@ import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResponse;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.android.gms.location.SettingsClient;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+
+import java.io.IOException;
+import java.util.List;
 
 import echomachine.com.flickrapi_v1.Constant;
 
@@ -51,51 +57,17 @@ public class GPSUtils {
         });
     }
 
-    /**
-     // method for turn on GPS
-     public static void turnGPSOn(Context context) {
-     LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-     SettingsClient mSettingsClient = LocationServices.getSettingsClient(context);
-     LocationRequest locationRequest = LocationRequest.create();
-     locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-     locationRequest.setInterval(10 * 1000);
-     locationRequest.setFastestInterval(2 * 1000);
-     LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
-     .addLocationRequest(locationRequest);
-     LocationSettingsRequest mLocationSettingsRequest = builder.build();
-     //**************************
-     builder.setAlwaysShow(true);
-
-     if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-     mSettingsClient.checkLocationSettings(mLocationSettingsRequest)
-     .addOnFailureListener((Activity) context, (OnFailureListener) e -> {
-     int statusCode = ((ApiException) e).getStatusCode();
-     switch (statusCode) {
-     case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
-     try {
-     // Show the dialog by calling startResolutionForResult(), and check the
-     // result in onActivityResult().
-     ResolvableApiException rae = (ResolvableApiException) e;
-     rae.startResolutionForResult((Activity) context, Constant.GPS_DIALOG_REQUEST);
-     } catch (IntentSender.SendIntentException sie) {
-     Log.i(TAG, "PendingIntent unable to execute request.");
-     }
-     break;
-     case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
-     String errorMessage = "Location settings are inadequate, and cannot be " +
-     "fixed here. Fix in Settings.";
-     Log.e(TAG, errorMessage);
-     Toast.makeText((Activity) context, errorMessage, Toast.LENGTH_LONG).show();
-     }
-     });
-     }
-     }
-
-     **/
-    /**
-    public static boolean checkGPSEnabled(Context context) {
-        return GPSLocationReceiver.isGPSEnabled(context);
+    public void geoLocateThis(String searchString, Context context) {
+        Geocoder geocoder = new Geocoder(context);
+        List<Address> addressList;
+        try {
+            addressList = geocoder.getFromLocationName(searchString, 1);
+            if (addressList.size() > 0) {
+//                moveCamera(new LatLng(addressList.get(0).getLatitude(), addressList.get(0).getLongitude())
+//                        , Constant.MAP_CAMERA_ZOOM, addressList.get(0).getAddressLine(0));
+            }
+        } catch (IOException e) {
+            Toast.makeText(context, "" + e.getMessage(), Toast.LENGTH_LONG).show();
+        }
     }
-
-     **/
 }

@@ -10,8 +10,8 @@ android {
         applicationId "echomachine.com.flickrapi_v1"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 3
-        versionName "17.6.2020"
+        versionCode 10
+        versionName "25.7.2020.4"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -26,7 +26,6 @@ android {
         sourceCompatibility = 1.8
         targetCompatibility = 1.8
     }
-
 }
 
 dependencies {
@@ -34,9 +33,9 @@ dependencies {
 
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'com.google.android.material:material:1.1.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta4'
-    implementation 'androidx.navigation:navigation-fragment:2.2.2'
-    implementation 'androidx.navigation:navigation-ui:2.2.2'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta8'
+    implementation 'androidx.navigation:navigation-fragment:2.3.0'
+    implementation 'androidx.navigation:navigation-ui:2.3.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'com.google.firebase:firebase-auth:19.3.0'
@@ -66,7 +65,7 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.71828'
 
     //SwipeRefresh Layout
-    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
 
     //Pagination
     def paging_version = "1.0.1"
@@ -81,7 +80,7 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
 
     //Workmanager
-    implementation "androidx.work:work-runtime:2.3.4"
+    implementation 'androidx.work:work-runtime:2.4.0'
 
     //Play service
     implementation "com.google.android.gms:play-services-location:17.0.0"

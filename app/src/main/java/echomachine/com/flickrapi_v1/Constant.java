@@ -14,7 +14,6 @@ public class Constant {
     public static final int ERROR_DIALOG_REQUEST = 9001;
     public static final int KEY_LOCATION_REQUEST = 201;
     public static final int GPS_DIALOG_REQUEST = 202;
-    public static final String MAPVIEW_BUNDLE_KEY = "MapViewBundleKey";
     public static final float MAP_CAMERA_ZOOM = 15f;
     public static final int AUTOCOMPLETE_REQUEST_KEY = 102;
 }

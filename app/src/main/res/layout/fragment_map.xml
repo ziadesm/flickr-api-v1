@@ -52,6 +52,7 @@
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="10dp"
         android:layout_marginTop="10dp"
+        android:padding="7dp"
         android:scaleType="centerCrop"
         android:background="@drawable/map_fragment_circle_bg"
         android:src="@drawable/ic_gps_map_fragment"

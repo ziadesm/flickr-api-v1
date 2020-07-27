@@ -69,7 +69,7 @@ public class RecentImageAdapter extends PagedListAdapter<Photo, RecentImageAdapt
                 @SuppressLint("CheckResult")
                 @Override
                 public void onDoubleClick(View v) {
-                    new CountDownTimer(1500, 750) {
+                    new CountDownTimer(5000, 5000) {
 
                         @Override
                         public void onTick(long millisUntilFinished) {
@@ -101,16 +101,17 @@ public class RecentImageAdapter extends PagedListAdapter<Photo, RecentImageAdapt
                     snackbar.show();
                 }
 
-
                 @Override
                 public void onSingleClick(View v) {
                     //TODO Move to PhotoFragment (onGoing) to download and show other similar photo
                     NavController navController = Navigation.findNavController(fragment.getActivity(), R.id.nav_host_fragment);
                     HomeFragmentDirections.ActionNavigationHomeToNavigationSelected action =
                             HomeFragmentDirections.actionNavigationHomeToNavigationSelected();
-                    action.setPhotoUrl(getItem(getLayoutPosition()).getUrl_s());
-                    action.setPhotoOwner(getItem(getLayoutPosition()).getOwner());
-                    navController.navigate(action);
+                    if(getItem(getLayoutPosition()).getUrl_s() != null) {
+                        action.setPhotoUrl(getItem(getLayoutPosition()).getUrl_s());
+                        action.setPhotoOwner(getItem(getLayoutPosition()).getOwner());
+                        navController.navigate(action);
+                    }
                 }
             });
         }

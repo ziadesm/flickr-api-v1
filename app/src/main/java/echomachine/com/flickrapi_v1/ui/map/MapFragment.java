@@ -21,11 +21,9 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -41,21 +39,17 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
-import com.google.android.libraries.places.api.model.TypeFilter;
 import com.google.android.libraries.places.widget.Autocomplete;
 import com.google.android.libraries.places.widget.AutocompleteActivity;
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import echomachine.com.flickrapi_v1.Constant;
 import echomachine.com.flickrapi_v1.R;
 import echomachine.com.flickrapi_v1.utilties.GPSUtils;
-import echomachine.com.flickrapi_v1.utilties.HelperMethods;
 
 import static android.app.Activity.RESULT_OK;
 import static echomachine.com.flickrapi_v1.Constant.AUTOCOMPLETE_REQUEST_KEY;
@@ -120,7 +114,7 @@ public class MapFragment extends Fragment
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Places.initialize(getActivity().getApplicationContext(), "AIzaSyDhZ1cMcZji9wWYwP4ZPT-H34AtjThVoLk");
+        Places.initialize(getActivity(), "AIzaSyDhZ1cMcZji9wWYwP4ZPT-H34AtjThVoLk");
         mViewModel = ViewModelProviders.of(this).get(MapViewModel.class);
         navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
         OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
@@ -155,6 +149,7 @@ public class MapFragment extends Fragment
     }
 
     private void init() {
+        searchText.setFocusable(false);
         searchText.setOnClickListener(v -> {
             Intent intent = new Autocomplete.IntentBuilder(
                     AutocompleteActivityMode.OVERLAY,
@@ -171,20 +166,6 @@ public class MapFragment extends Fragment
                 GPSUtils.turnGPSOn(getContext());
             }
         });
-    }
-
-    private void geoLocateThis(String searchString) {
-        Geocoder geocoder = new Geocoder(requireContext());
-        List<Address> addressList;
-        try {
-            addressList = geocoder.getFromLocationName(searchString, 1);
-            if (addressList.size() > 0) {
-                moveCamera(new LatLng(addressList.get(0).getLatitude(), addressList.get(0).getLongitude())
-                        , Constant.MAP_CAMERA_ZOOM, addressList.get(0).getAddressLine(0));
-            }
-        } catch (IOException e) {
-            Toast.makeText(requireContext(), "" + e.getMessage(), Toast.LENGTH_LONG).show();
-        }
     }
 
     @Override
